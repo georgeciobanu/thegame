@@ -1,0 +1,6 @@
+db:
+  type: mysql
+
+rails:
+  approot: magical
+  type: ruby
