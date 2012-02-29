@@ -4,12 +4,12 @@ development:
   username: root
   password:
   host: localhost
-# test:
-#   adapter: mysql
-#   database: library_test
-#   username: root
-#   password: [password]
-#   host: localhost
+test:
+  adapter: mysql
+  database: library_test
+  username: root
+  password: 
+  host: localhost
 production:
   adapter: mysql
   database: library_production
