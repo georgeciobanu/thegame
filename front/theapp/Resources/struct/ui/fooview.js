@@ -7,9 +7,9 @@
 // Code is stripped-down version of Tweetanium, to expose new structure paradigm
 
 (function(){
-	S.ui.createFooView = function(){
+	Game.ui.createFooView = function(){
 		var view = Ti.UI.createView({backgroundColor: "red"});
-		view.add(Ti.UI.createLabel(S.combine({text: "See blogpost @ http://blog.krawaller.se"},$$.Label)));
+		view.add(Ti.UI.createLabel(Game.combine({text: "See blogpost @ http://blog.krawaller.se"}, Game.ui.properties.Label)));
 		return view;
 	};
 })();

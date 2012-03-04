@@ -6,10 +6,10 @@
 **/
 // Code is stripped-down version of Tweetanium, to expose new structure paradigm
 
-var S = {};
+var Game = {};
 
 (function(){
-	S.app = {};
+	Game.app = {};
 
 	var empty = {};
 	function mixin(/*Object*/ target, /*Object*/ source){
@@ -22,7 +22,7 @@ var S = {};
 		}
 		return target; // Object
 	};
-	S.mixin = function(/*Object*/ obj, /*Object...*/ props){
+	Game.mixin = function(/*Object*/ obj, /*Object...*/ props){
 		if(!obj){ obj = {}; }
 		for(var i=1, l=arguments.length; i<l; i++){
 			mixin(obj, arguments[i]);
@@ -32,7 +32,7 @@ var S = {};
 	
 	//create a new object, combining the properties of the passed objects with the last arguments having
 	//priority over the first ones
-	S.combine = function(/*Object*/ obj, /*Object...*/ props) {
+	Game.combine = function(/*Object*/ obj, /*Object...*/ props) {
 		var newObj = {};
 		for(var i=0, l=arguments.length; i<l; i++){
 			mixin(newObj, arguments[i]);
@@ -44,7 +44,7 @@ var S = {};
 		Branching logic based on OS
 	*/
 	var osname = Ti.Platform.osname;
-	S.os = function(/*Object*/ map) {
+	Game.os = function(/*Object*/ map) {
 		var def = map.def||null; //default function or value
 		if (typeof map[osname] != 'undefined') {
 			if (typeof map[osname] == 'function') { return map[osname](); }
@@ -58,4 +58,5 @@ var S = {};
 	
 }());
 
+Ti.include('/struct/remote/rest.js');
 Ti.include("/struct/ui/ui.js");

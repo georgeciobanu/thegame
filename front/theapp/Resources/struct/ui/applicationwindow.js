@@ -10,12 +10,12 @@
 	var platformWidth = Ti.Platform.displayCaps.platformWidth;
 	
 	//create the main application window
-	S.ui.createApplicationWindow = function(_args) {
-		var win = Ti.UI.createWindow(S.combine($$.Window,{
+	Game.ui.createApplicationWindow = function(_args) {
+		var win = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window,{
 			exitOnClose:true,
 			orientationModes:[Ti.UI.PORTRAIT]
 		})),
-		headerView = Ti.UI.createView(S.combine($$.headerView,{top:0})),
+		headerView = Ti.UI.createView(Game.combine(Game.ui.properties.headerView,{top:0})),
 		tabHeight = 60,
 		tabWidth = platformWidth/3,
 		tabView = Ti.UI.createView({
@@ -25,18 +25,18 @@
 			width:platformWidth
 		}),
 		tabs = [];
-		headerView.add(Ti.UI.createLabel(S.combine({text:"Structure test"},$$.Label)));
+		headerView.add(Ti.UI.createLabel(Game.combine({text:"Structure test"}, Game.ui.properties.Label)));
 		
 		//Add the main app 'filmstrip'	
-		var appFilmStrip = S.ui.createFilmStripView({
+		var appFilmStrip = Game.ui.createFilmStripView({
 			top:40,
 			left:0,
 			right:0,
 			bottom:tabHeight-10,
 			views: [
-				S.ui.createFooView(),
-				S.ui.createBarView(),
-				S.ui.createBazView()
+				Game.ui.createFooView(),
+				Game.ui.createBarView(),
+				Game.ui.createBazView()
 			]
 		});
 		
@@ -52,7 +52,7 @@
 		tab.add(Ti.UI.createView({
 			right:10,
 			left:10,
-			backgroundColor:S.ui.theme.darkBlue
+			backgroundColor:Game.ui.theme.darkBlue
 		}));
 		
 		tabView.add(tab);
@@ -87,7 +87,7 @@
 					if (!tabs[i].on) {
 						//animate the tab
 						tab.animate({
-							duration:$$.animationDuration,
+							duration:Game.ui.properties.animationDuration,
 							left:tabWidth*i,
 							bottom:0
 						},function(idx) { //use closure to retain value of i in idx
@@ -133,7 +133,7 @@
 		
 		// add msg view
 		var msgview = Ti.UI.createView({opacity:0,zIndex:10,width:platformWidth-100,left:50,top:230,height:100}),
-			msglabel = Ti.UI.createLabel($$.Label);
+			msglabel = Ti.UI.createLabel(Game.ui.properties.Label);
 		msgview.add(msglabel);
 		Ti.App.addEventListener("app:msg",function(e){
 			Ti.API.log(e);

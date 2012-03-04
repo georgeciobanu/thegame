@@ -11,9 +11,9 @@ Titanium.UI.setBackgroundColor('#000');
 
 Ti.include("/struct/struct.js");
 
-S.app.mainWindow = S.ui.createApplicationWindow();
-S.app.mainWindow.open();
+Game.app.mainWindow = Game.ui.createLoginWindow();
+Game.app.mainWindow.open();
 
-S.app.mood = "RADIANT!";
+Game.app.mood = "RADIANT!";
 Ti.App.fireEvent("app:mood.update");
 setTimeout(function(){Ti.App.fireEvent("app:msg",{msg:"Welcome!"});},1000);

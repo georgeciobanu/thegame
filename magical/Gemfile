@@ -5,10 +5,12 @@ gem 'rails', '3.2.1'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+
 gem 'mysql'
+gem 'bcrypt-ruby', '3.0.1'
+
 
 group :development do
-
   gem 'annotate', '2.4.1.beta1'
   gem 'rspec-rails'
 end
@@ -25,6 +27,8 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 end
+
+
 
 gem 'jquery-rails'
 

@@ -7,11 +7,11 @@
 // Code is stripped-down version of Tweetanium, to expose new structure paradigm
 
 (function(){
-	S.ui.createBarView = function(){
+	Game.ui.createBarView = function(){
 		var view = Ti.UI.createView({backgroundColor: "green"}),
-			label = Ti.UI.createLabel($$.Label);
+			label = Ti.UI.createLabel(Game.ui.properties.Label);
 		Ti.App.addEventListener("app:mood.update",function(e){
-			label.text = "You are "+S.app.mood+"!";
+			label.text = "You are " + Game.ui.properties.app.mood+"!";
 		});
 		view.add(label);
 		return view;

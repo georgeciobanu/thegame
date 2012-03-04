@@ -7,22 +7,22 @@
 // Code is stripped-down version of Tweetanium, to expose new structure paradigm
 
 (function(){
-	S.ui.createBazView = function(){
+	Game.ui.createBazView = function(){
 		var view = Ti.UI.createView({backgroundColor: "blue"}),
-			textbox = Ti.UI.createTextField(S.combine({top:50,left:10,right:10,value:"radiant"},$$.TextField)),
-			button = Ti.UI.createButton(S.combine({title:"Become!",top:130,height:30,width:150},$$.button));
+			textbox = Ti.UI.createTextField(S.combine({top:50,left:10,right:10,value:"radiant"},Game.ui.properties.TextField)),
+			button = Ti.UI.createButton(S.combine({title:"Become!",top:130,height:30,width:150},Game.ui.properties.button));
 		button.addEventListener("click",function(){
 			textbox.blur();
 			if (!textbox.value){
 				Ti.App.fireEvent("app:msg",{msg:"Must enter a mood!",error:true});
 				return;
 			}
-			if (textbox.value === S.app.mood){
-				Ti.App.fireEvent("app:msg",{msg:"You already are "+S.app.mood+"!",error:true});
+			if (textbox.value === Game.app.mood){
+				Ti.App.fireEvent("app:msg",{msg:"You already are " + Game.ui.properties.app.mood+"!",error:true});
 				return;
 			}
-			S.app.mood = textbox.value;
-			Ti.API.log("MOOD SET TO "+S.app.mood);
+			Game.app.mood = textbox.value;
+			Ti.API.log("MOOD SET TO " + Game.ui.properties.app.mood);
 			Ti.App.fireEvent("app:mood.update");
 			Ti.App.fireEvent("app:msg",{msg:"Awright! :)"});
 		});

@@ -7,25 +7,25 @@
 // Code is stripped-down version of Tweetanium, to expose new structure paradigm
 
 (function(){
-	S.ui = {};
+	Game.ui = {};
 	
 	//create a film strip like view 
-	S.ui.createFilmStripView = function(_args) {
-		var root = Ti.UI.createView(S.combine($$.stretch,_args)),
+	Game.ui.createFilmStripView = function(_args) {
+		var root = Ti.UI.createView(Game.combine(Game.ui.properties.stretch,_args)),
 		views = _args.views,
 		container = Ti.UI.createView({
 			top:0,
 			left:0,
 			bottom:0,
-			width:$$.platformWidth*_args.views.length
+			width:Game.ui.properties.platformWidth*_args.views.length
 		});
 			
 		for (var i = 0, l = views.length; i<l; i++) {
 			var newView = Ti.UI.createView({
 				top:0,
 				bottom:0,
-				left:$$.platformWidth*i,
-				width:$$.platformWidth
+				left:Game.ui.properties.platformWidth*i,
+				width:Game.ui.properties.platformWidth
 			});
 			newView.add(views[i]);
 			container.add(newView);
@@ -34,9 +34,9 @@
 		
 		//set the currently visible index
 		root.addEventListener('changeIndex', function(e) {
-			var leftValue = $$.platformWidth*e.idx*-1;
+			var leftValue = Game.ui.properties.platformWidth*e.idx*-1;
 			container.animate({
-				duration:$$.animationDuration,
+				duration:Game.ui.properties.animationDuration,
 				left:leftValue
 			});
 		});
@@ -45,6 +45,7 @@
 	};
 }());
 
+Ti.include("/struct/ui/login.js");
 Ti.include("/struct/ui/styles.js");
 Ti.include("/struct/ui/applicationwindow.js");
 Ti.include("/struct/ui/fooview.js");
