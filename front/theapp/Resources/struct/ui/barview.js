@@ -11,7 +11,7 @@
 		var view = Ti.UI.createView({backgroundColor: "green"}),
 			label = Ti.UI.createLabel(Game.ui.properties.Label);
 		Ti.App.addEventListener("app:mood.update",function(e){
-			label.text = "You are " + Game.ui.properties.app.mood+"!";
+      label.text = "You are " + Game.app.mood+"!";
 		});
 		view.add(label);
 		return view;

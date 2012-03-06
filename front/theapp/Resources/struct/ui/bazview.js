@@ -18,11 +18,11 @@
 				return;
 			}
 			if (textbox.value === Game.app.mood){
-				Ti.App.fireEvent("app:msg",{msg:"You already are " + Game.ui.properties.app.mood+"!",error:true});
+        Ti.App.fireEvent("app:msg",{msg:"You already are " + Game.app.mood+"!",error:true});
 				return;
 			}
 			Game.app.mood = textbox.value;
-			Ti.API.log("MOOD SET TO " + Game.ui.properties.app.mood);
+      Ti.API.log("MOOD SET TO " + Game.app.mood);
 			Ti.App.fireEvent("app:mood.update");
 			Ti.App.fireEvent("app:msg",{msg:"Awright! :)"});
 		});

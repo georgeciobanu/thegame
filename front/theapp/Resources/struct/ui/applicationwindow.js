@@ -27,56 +27,56 @@
 		tabs = [];
 		headerView.add(Ti.UI.createLabel(Game.combine({text:"Structure test"}, Game.ui.properties.Label)));
 
-		//Add the main app 'filmstrip'	
-		var appFilmStrip = Game.ui.createFilmStripView({
-			top:40,
-			left:0,
-			right:0,
-			bottom:tabHeight-10,
-			views: [
-				Game.ui.createFooView(),
-				Game.ui.createBarView(),
-				Game.ui.createBazView()
-			]
-		});
+    // //Add the main app 'filmstrip' 
+    // var appFilmStrip = Game.ui.createFilmStripView({
+    //  top:40,
+    //  left:0,
+    //  right:0,
+    //  bottom:tabHeight-10,
+    //  views: [
+    //    Game.ui.createFooView(),
+    //    Game.ui.createBarView(),
+    //    Game.ui.createBazView()
+    //  ]
+    // });
 		
-		//create the 'tab' view, which we will animate back and forth along the tab bar
-		var tab = Ti.UI.createView({
-			left:0,
-			top:15,
-			height:45,
-			width:tabWidth,
-			bottom:0
-		});
+    //create the 'tab' view, which we will animate back and forth along the tab bar
+    var tab = Ti.UI.createView({
+     left:0,
+     top:15,
+     height:45,
+     width:tabWidth,
+     bottom:0
+    });
 		
-		tab.add(Ti.UI.createView({
-			right:10,
-			left:10,
-			backgroundColor:Game.ui.theme.darkBlue
-		}));
-		
-		tabView.add(tab);
+    tab.add(Ti.UI.createView({
+     right:10,
+     left:10,
+     backgroundColor:Game.ui.theme.darkBlue
+    }));
+    
+    tabView.add(tab);
 
-		//create clickable tab images
-		function createTab(word,_cb,_on) {
-			var view = Ti.UI.createView({width:tabWidth}),
-			    label = Ti.UI.createLabel({text:word,textAlign:"center"}),
-				dimension = 40;
-			
-			view.on = _on||false; //ivar for 'on' state
-			
-			//assemble view
-			view.add(label);
-			view.addEventListener('click',_cb);
-			
-			//'instance' method
-			view.toggle = function() {
-				view.on = !view.on;
-				label.text = label.text[view.on ? "toUpperCase" : "toLowerCase"]();
-			};
-			
-			return view;
-		}
+    //create clickable tab images
+    function createTab(word,_cb,_on) {
+     var view = Ti.UI.createView({width:tabWidth}),
+         label = Ti.UI.createLabel({text:word,textAlign:"center"}),
+       dimension = 40;
+     
+     view.on = _on||false; //ivar for 'on' state
+     
+     //assemble view
+     view.add(label);
+     view.addEventListener('click',_cb);
+     
+     //'instance' method
+     view.toggle = function() {
+       view.on = !view.on;
+       label.text = label.text[view.on ? "toUpperCase" : "toLowerCase"]();
+     };
+     
+     return view;
+    }
 		
 		//toggle view state of application to the relevant tab
 		function selectIndex(_idx) {
@@ -99,7 +99,7 @@
 						}(i));
 						
 						//set the current film strip index
-						appFilmStrip.fireEvent('changeIndex',{idx:i});
+            // appFilmStrip.fireEvent('changeIndex',{idx:i});
 					}
 				}
 				else if (tabs[i].on && (_idx !== i)) {
@@ -108,23 +108,23 @@
 			}
 		}
 		
-		//assemble main app tabs
-		// HACK: need to use anonymous functions to wrap selectIndex as a view event handler
-		tabs.push(createTab('FOO', function() {
-			selectIndex(0);
-		},true));
-		tabs.push(createTab('bar', function() {
-			selectIndex(1);
-		}));
-		tabs.push(createTab('baz', function() {
-			selectIndex(2);
-		}));
-		
-		//add tabs to layout
-		for (var i = 0, l = tabs.length; i<l; i++) {
-			tabs[i].left = tabWidth*i;
-			tabView.add(tabs[i]);
-		}
+    //assemble main app tabs
+    // HACK: need to use anonymous functions to wrap selectIndex as a view event handler
+    tabs.push(createTab('FOO', function() {
+     selectIndex(0);
+    },true));
+    tabs.push(createTab('bar', function() {
+     selectIndex(1);
+    }));
+    tabs.push(createTab('baz', function() {
+     selectIndex(2);
+    }));
+    
+    //add tabs to layout
+    for (var i = 0, l = tabs.length; i<l; i++) {
+     tabs[i].left = tabWidth*i;
+     tabView.add(tabs[i]);
+    }
 
 		//App app-level event listener to change tabs
 		Ti.App.addEventListener('app:change.tab', function(e) {
@@ -148,8 +148,8 @@
 		win.add(msgview);
 		
 		//assemble main app window
-		win.add(tabView);
-		win.add(appFilmStrip);
+    win.add(tabView);
+    // win.add(appFilmStrip);
 		win.add(headerView);
 
 		return win;
