@@ -47,7 +47,7 @@
 
 Ti.include("/struct/ui/login.js");
 Ti.include("/struct/ui/styles.js");
-Ti.include("/struct/ui/applicationwindow.js");
+Ti.include("/struct/ui/tabGroup.js");
 Ti.include("/struct/ui/fooview.js");
 Ti.include("/struct/ui/barview.js");
 Ti.include("/struct/ui/bazview.js");
