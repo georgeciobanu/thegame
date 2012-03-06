@@ -11,13 +11,29 @@
 	//create the main application window
 	Game.ui.createMapWindow = function(_args) {
 
-    
-
 	var win = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window,{
 		orientationModes:[Ti.UI.PORTRAIT]
 	}));
-		
+	
+	mapView = Ti.UI.createView({
+    backgroundColor: "red"
+	});
+	win.add(mapView);
 
-		return win;
+  // Create the regions
+  var width = 100, height = 100;
+  for (i = 0; i < 6; i++) {
+    var tView = Ti.UI.createView({
+      top: Math.floor(i / 2) * height + Math.floor(i/2) * 10 + 30,
+      left: (i % 2) * width + 30 + (i % 2) * 10,
+      width: width,
+      height: height,
+      backgroundColor: 'green'
+    });
+    Ti.API.info(tView.top);
+    mapView.add(tView);
+  }
+
+	return win;
 	};
 })();

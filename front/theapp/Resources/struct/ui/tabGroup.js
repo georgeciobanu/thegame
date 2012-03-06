@@ -6,16 +6,15 @@
 **/
 // Code is stripped-down version of Tweetanium, to expose new structure paradigm
 
+
 (function() {
   var platformWidth = Ti.Platform.displayCaps.platformWidth;	
 	//create the main application window
 	Game.ui.createTabGroup = function(_args) {
 
-		var win = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window,{
-			exitOnClose:true,
-			orientationModes:[Ti.UI.PORTRAIT]
-		})),		
 		tabGroup = Ti.UI.createTabGroup();
+		var win = Game.ui.createMapWindow();
+		
     tabGroup.addTab(Ti.UI.createTab({window: win, title: 'Map'}));
     
 		var win2 = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window,{
@@ -23,7 +22,7 @@
 		}));
 
     tabGroup.addTab(Ti.UI.createTab({window: win2, title: 'Summon minions'}));
-		
+
 
 		// add msg view
 		var msgview = Ti.UI.createView({opacity:0,zIndex:10,width:platformWidth-100,left:50,top:230,height:100}),

@@ -45,6 +45,7 @@
 	};
 }());
 
+Ti.include("/struct/ui/mapWindow.js");
 Ti.include("/struct/ui/login.js");
 Ti.include("/struct/ui/styles.js");
 Ti.include("/struct/ui/tabGroup.js");
