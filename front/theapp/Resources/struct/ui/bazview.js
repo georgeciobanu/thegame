@@ -9,8 +9,8 @@
 (function(){
 	Game.ui.createBazView = function(){
 		var view = Ti.UI.createView({backgroundColor: "blue"}),
-			textbox = Ti.UI.createTextField(S.combine({top:50,left:10,right:10,value:"radiant"},Game.ui.properties.TextField)),
-			button = Ti.UI.createButton(S.combine({title:"Become!",top:130,height:30,width:150},Game.ui.properties.button));
+			textbox = Ti.UI.createTextField(Game.combine({top:50,left:10,right:10,value:"radiant"},Game.ui.properties.TextField)),
+			button = Ti.UI.createButton(Game.combine({title:"Become!",top:130,height:30,width:150},Game.ui.properties.button));
 		button.addEventListener("click",function(){
 			textbox.blur();
 			if (!textbox.value){

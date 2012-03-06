@@ -15,20 +15,25 @@ class User < ActiveRecord::Base
   def self.Play(email, password)
     @user = User.find_by_email(email)
 
-    if @user 
-      Rails.logger.info '\nUser exists so we will return is\n'      
-      return @user
+    if @user
+      Rails.logger.info '\nUser exists so we check the password\n'
+      if @user.authenticate(password)
+        return :result => 'login', :user => @user
+      else
+        Rails.logger.info '\nPassword is invalid'
+        return :result => 'invalid password', :user => nil
+      end
     end
     Rails.logger.info '\nUser does not exists so we will create one\n'
-    
+
     # User doesn't exist so we need to create one
-    @user = User.create(email: email, password: password)
+    @user = User.new(email: email, password: password)
   
-    if @user
+    if @user.save
       Rails.logger.info '\nUser created, will return\n'
-      return @user
+      return :result => 'new', :user => @user
     else 
-      return @user.errors.full_messages
+      return :result => 'error', :details => @user.errors.full_messages
     end
   end
     

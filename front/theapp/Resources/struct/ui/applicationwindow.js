@@ -7,10 +7,10 @@
 // Code is stripped-down version of Tweetanium, to expose new structure paradigm
 
 (function() {
-	var platformWidth = Ti.Platform.displayCaps.platformWidth;
-	
+  var platformWidth = Ti.Platform.displayCaps.platformWidth;	
 	//create the main application window
 	Game.ui.createApplicationWindow = function(_args) {
+
 		var win = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window,{
 			exitOnClose:true,
 			orientationModes:[Ti.UI.PORTRAIT]
@@ -26,7 +26,7 @@
 		}),
 		tabs = [];
 		headerView.add(Ti.UI.createLabel(Game.combine({text:"Structure test"}, Game.ui.properties.Label)));
-		
+
 		//Add the main app 'filmstrip'	
 		var appFilmStrip = Game.ui.createFilmStripView({
 			top:40,
@@ -56,7 +56,7 @@
 		}));
 		
 		tabView.add(tab);
-		
+
 		//create clickable tab images
 		function createTab(word,_cb,_on) {
 			var view = Ti.UI.createView({width:tabWidth}),
@@ -125,12 +125,12 @@
 			tabs[i].left = tabWidth*i;
 			tabView.add(tabs[i]);
 		}
-		
+
 		//App app-level event listener to change tabs
 		Ti.App.addEventListener('app:change.tab', function(e) {
 			selectIndex(e.tabIndex);
 		});
-		
+
 		// add msg view
 		var msgview = Ti.UI.createView({opacity:0,zIndex:10,width:platformWidth-100,left:50,top:230,height:100}),
 			msglabel = Ti.UI.createLabel(Game.ui.properties.Label);

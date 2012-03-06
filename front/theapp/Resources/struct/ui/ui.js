@@ -19,7 +19,7 @@
 			bottom:0,
 			width:Game.ui.properties.platformWidth*_args.views.length
 		});
-			
+
 		for (var i = 0, l = views.length; i<l; i++) {
 			var newView = Ti.UI.createView({
 				top:0,

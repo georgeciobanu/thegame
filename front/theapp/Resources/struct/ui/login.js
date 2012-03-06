@@ -9,7 +9,7 @@
 	//create the login window
 	Game.ui.createLoginWindow = function(_args) {
 		var win = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window, {
-			exitOnClose:true,
+			exitOnClose: false,
 			orientationModes:[Ti.UI.PORTRAIT]
 		})),
 		
@@ -75,12 +75,12 @@
 
       function processLoginResponse(e) {
         Ti.API.info('in onload');
-        Ti.API.indo(this.responseText);
         response = JSON.parse(this.responseText);
-        Ti.API.info(response);
+        // if (response.result === 'login' || response.result === 'new') {
+        // }
       }
     }	
-		
+
 		win.add(mainView);
 		return win;
 	}
