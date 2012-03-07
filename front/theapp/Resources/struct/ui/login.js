@@ -22,15 +22,11 @@
 		  layout: 'horizontal',
 		  height: 50
 		}),
-		emailLabel = Ti.UI.createLabel({
-		  text: 'Email:',
-		  height: 20,
-		  width: 70
-		}),
 		emailTextBox = Ti.UI.createTextField({
       color:'#336699',
       height:35,
       width:250,
+      hintText: 'Email',
       borderStyle: Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		  
 		}),
 		
@@ -38,16 +34,12 @@
 		  layout: 'horizontal',
 		  height: 50
 		}),
-		passwordLabel = Ti.UI.createLabel({
-		  text: 'Password:',
-		  height: 20,
-		  width: 70
-		}),
 		passwordTextBox = Ti.UI.createTextField({
       color:'#336699',
       height:35,
       width:250,
       passwordMask: true,
+      hintText: 'Password',
       borderStyle: Titanium.UI.INPUT_BORDERSTYLE_ROUNDED
 		}),
 		
@@ -58,10 +50,7 @@
       borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		  
 		});
 		
-		emailView.add(emailLabel);
 		emailView.add(emailTextBox);
-		
-		passwordView.add(passwordLabel);
 		passwordView.add(passwordTextBox);
 		
 		mainView.add(emailView);
