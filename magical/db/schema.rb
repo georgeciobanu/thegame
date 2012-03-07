@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20120307172455) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"
+    t.integer  "team_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -76,11 +76,11 @@
       function processLoginResponse(e) {
         Ti.API.info('in onload');
         response = JSON.parse(this.responseText);
-        // if (response.result === 'login' || response.result === 'new') {
+        if (response.result === 'login' || response.result === 'new') {
           Game.app.mainWindow = Game.ui.createTabGroup();
           Game.app.mainWindow.open();
           win.close();
-        // }
+        }
       }
     }	
 
