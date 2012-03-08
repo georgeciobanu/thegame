@@ -15,5 +15,7 @@
 class Area < ActiveRecord::Base
   attr_accessible :lat, :long, :name, :width, :height
   validates :width, numericality: { :greater_than => 0 }
-  validates :length, numericality: { :greater_than => 0 }  
+  validates :height, numericality: { :greater_than => 0 }
+  
+  belongs_to :game_map
 end

@@ -6,6 +6,7 @@ class CreateAreas < ActiveRecord::Migration
       t.float :lat
       t.float :width
       t.float :height
+      t.integer :game_map_id
 
       t.timestamps
     end

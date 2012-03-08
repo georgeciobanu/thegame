@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120307191835) do
+ActiveRecord::Schema.define(:version => 20120307233603) do
 
   create_table "areas", :force => true do |t|
     t.string   "name"
@@ -19,14 +19,23 @@ ActiveRecord::Schema.define(:version => 20120307191835) do
     t.float    "lat"
     t.float    "width"
     t.float    "height"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "game_map_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "game_maps", :force => true do |t|
+    t.string   "name"
+    t.text     "adjacency_list"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "games", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "game_map_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "teams", :force => true do |t|
@@ -40,10 +49,10 @@ ActiveRecord::Schema.define(:version => 20120307191835) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
+    t.integer  "team_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"
-    t.integer  "team_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
