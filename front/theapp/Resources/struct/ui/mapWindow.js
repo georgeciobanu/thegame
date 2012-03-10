@@ -14,7 +14,9 @@
 	var win = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window,{
 		orientationModes:[Ti.UI.PORTRAIT]
 	}));
-	
+
+
+  
   // initialize the module  
   var nfm = require('netfunctional.mapoverlay');  
 
@@ -29,6 +31,11 @@
            longitudeDelta:100  
       },  
   });
+  var parentV = Ti.UI.createView();
+  parentV.add(mapview);
+  
+	parentV.addEventListener('touchstart', function(){ Titanium.API.info("touchstart"); }); 
+	parentV.addEventListener('click', function(){ Titanium.API.info("clicked"); });  
 
   // #First create an object defining the properties of our overlay
   var polyOverlayDef = {
@@ -47,7 +54,7 @@
 
   // #Call the addOverlay function of our `netfunctional.mapoverlay.MapView` object with the data for our polygon overlay as parameter
   mapview.addOverlay(polyOverlayDef);
-  
+
   //#First create an object defining the properties of our overlay
   var circleOverlayDef = {
       name:"broadcastRange",
@@ -63,12 +70,13 @@
       width:1
   };
 
+
   // #Call the addOverlay function of our `netfunctional.mapoverlay.MapView` object with the data for our circle overlay as parameter
   mapview.addOverlay(circleOverlayDef);
   
 
   // #add the mapview to your window
-  win.add(mapview);
+  win.add(parentV);
 
 	return win;
 	};

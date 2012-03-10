@@ -5,3 +5,5 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+game = Game.create { name: 'University of Colorado at Boulder' }
+areas = Area.create([{ name: 'Sports', lat: 40.009341, long: -105.265943 }])
