@@ -10,6 +10,7 @@
 Titanium.UI.setBackgroundColor('#000');
 
 Ti.include("/struct/struct.js");
+var _ = require("underscore")._;
 
 Game.app.mainWindow = Game.ui.createLoginWindow();
 Game.app.mainWindow.open();

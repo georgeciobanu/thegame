@@ -76,10 +76,10 @@
       }
       
       function processAreas(e){
-      	var x;
-      	for(x in e){
-      		Ti.API.info('Got area 1:' + x.type);
-      	}
+        response = JSON.parse(this.responseText);
+      	_.each(response, function(area) {
+      	  Ti.API.info(area);
+      	});
       }
     }	
 
