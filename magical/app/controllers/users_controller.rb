@@ -11,4 +11,11 @@ class UsersController < ApplicationController
     Rails.logger.info respo
     render :json => respo
   end
+  
+  def info
+    # Get all the info needed for the user
+    @user_info = User.info(params[:user_id])
+    
+  end
+  
 end

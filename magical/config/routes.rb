@@ -1,6 +1,11 @@
 Magical::Application.routes.draw do
   
-  resources :users
+  resources :users do
+    member do
+      get 'info'
+    end
+  end
+  
 
 
   # The priority is based upon order of creation:

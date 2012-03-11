@@ -11,14 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120307233603) do
+ActiveRecord::Schema.define(:version => 20120229213835) do
 
   create_table "areas", :force => true do |t|
     t.string   "name"
-    t.float    "long"
     t.float    "lat"
-    t.float    "width"
-    t.float    "height"
+    t.float    "long"
     t.integer  "game_map_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
@@ -40,8 +38,9 @@ ActiveRecord::Schema.define(:version => 20120307233603) do
 
   create_table "teams", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "game_map_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "teams", ["name"], :name => "index_teams_on_name", :unique => true
