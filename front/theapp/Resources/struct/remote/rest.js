@@ -6,12 +6,13 @@ Game.rest.baseUrl = '';
 
 Ti.API.info('Model is: ' + Titanium.Platform.model);
 
-if (Titanium.Platform.model == 'x86_64') {
+if (Titanium.Platform.model == 'x86_64' || Titanium.Platform.model == "Simulator") {
   Ti.API.info('Running on Simulator');
-  Game.rest.baseUrl = 'http://localhost:3000/'
+  Game.rest.baseUrl = 'http://localhost:3000/';
+  //Game.rest.baseUrl = 'http://thegame-georgeciobanu.dotcloud.com/';
 } else {
   Ti.API.info('Running on real device');
-  Game.rest.baseUrl = 'http://thegame-georgeciobanu.dotcloud.com/'
+  Game.rest.baseUrl = 'http://thegame-georgeciobanu.dotcloud.com/';
 }
 
 

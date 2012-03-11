@@ -13,7 +13,9 @@
 	Game.ui.createTabGroup = function(_args) {
 
 		tabGroup = Ti.UI.createTabGroup();
+		Ti.API.info('in tab group');
 		var win = Game.ui.createMapWindow();
+
 		
     tabGroup.addTab(Ti.UI.createTab({window: win, title: 'Map'}));
     

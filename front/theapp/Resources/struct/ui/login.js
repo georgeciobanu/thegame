@@ -27,6 +27,7 @@
       height:35,
       width:250,
       hintText: 'Email',
+      value: 'liviu@lh.com',
       borderStyle: Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		  
 		}),
 		
@@ -40,6 +41,7 @@
       width:250,
       passwordMask: true,
       hintText: 'Password',
+      value: 'password',
       borderStyle: Titanium.UI.INPUT_BORDERSTYLE_ROUNDED
 		}),
 		

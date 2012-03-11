@@ -7,77 +7,76 @@
 // Code is stripped-down version of Tweetanium, to expose new structure paradigm
 
 (function() {
-  var platformWidth = Ti.Platform.displayCaps.platformWidth;	
+	var platformWidth = Ti.Platform.displayCaps.platformWidth;	
 	//create the main application window
 	Game.ui.createMapWindow = function(_args) {
 
-	var win = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window,{
-		orientationModes:[Ti.UI.PORTRAIT]
-	}));
-
-
-  
-  // initialize the module  
-  var nfm = require('netfunctional.mapoverlay');  
-
-  // #create the map view
-  var mapview = nfm.createMapView({  
-      mapType: Titanium.Map.STANDARD_TYPE,  
-      animate:true,  
-      region: {  
-           latitude:33.126865,  
-           longitude:-117.266847,  
-           latitudeDelta:100,  
-           longitudeDelta:100  
-      },  
-  });
-  var parentV = Ti.UI.createView();
-  parentV.add(mapview);
-  
-	parentV.addEventListener('touchstart', function(){ Titanium.API.info("touchstart"); }); 
-	parentV.addEventListener('click', function(){ Titanium.API.info("clicked"); });  
-
-  // #First create an object defining the properties of our overlay
-  var polyOverlayDef = {
-      name:"pOverlay1",
-      type:"polygon",
-      points:[
-          {latitude: 32.259265  ,longitude:-64.863281},
-          {latitude: 18.354526  ,longitude:-66.049805},
-          {latitude: 25.839449  ,longitude:-80.244141}
-      ],
-      strokeColor: "purple",
-      strokeAlpha: 0.9,
-      fillColor: "blue",
-      fillAlpha: 0.5
-  };
-
-  // #Call the addOverlay function of our `netfunctional.mapoverlay.MapView` object with the data for our polygon overlay as parameter
-  mapview.addOverlay(polyOverlayDef);
-
-  //#First create an object defining the properties of our overlay
-  var circleOverlayDef = {
-      name:"broadcastRange",
-      type:"circle",
-      center:{latitude:42.814243,
-          longitude:-73.939569
-      },
-      radius:160000, //approximates 1000 miles
-      strokeColor: "red",
-      strokeAlpha: 0.9,
-      fillColor: "orange",
-      fillAlpha: 0.5,
-      width:1
-  };
-
-
-  // #Call the addOverlay function of our `netfunctional.mapoverlay.MapView` object with the data for our circle overlay as parameter
-  mapview.addOverlay(circleOverlayDef);
-  
-
-  // #add the mapview to your window
-  win.add(parentV);
-
-	return win;
+		var win = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window,{
+			orientationModes:[Ti.UI.PORTRAIT]
+		}));
+		
+		var artsAnnotation = Ti.Map.createAnnotation({
+			latitude:33.74511,
+			longitude:-84.38993,
+			title:"Arts Area",
+			subtitle:'Blue Team',
+			animate:true,
+			image: '/struct/images/blueArts.png',
+			myid: 'arts'// Custom property to uniquely identify this annotation.
+		});
+		
+		var engineeringAnnotation = Ti.Map.createAnnotation({
+			latitude:33.75511,
+			longitude:-84.38993,
+			title:"Engineering Area",
+			subtitle:'Red Team',
+			animate:true,
+			image: '/struct/images/redEngineering.png',
+			myid: 'engineering' // Custom property to uniquely identify this annotation.
+		});
+		
+		var scienceAnnotation = Ti.Map.createAnnotation({
+			latitude:33.74511,
+			longitude:-84.43993,
+			title:"Science Area",
+			subtitle:'Blue Team',
+			animate:true,
+			image: '/struct/images/blueEngineering.png',
+			myid: 'science' // Custom property to uniquely identify this annotation.
+		});
+		
+		var sportsAnnotation = Ti.Map.createAnnotation({
+			latitude:33.75511,
+			longitude:-84.43993,
+			title:"Sports Area",
+			subtitle:'Red Team',
+			animate:true,
+			image: '/struct/images/redSports.png',
+			myid: 'sports' // Custom property to uniquely identify this annotation.
+		});
+		 
+		var mapView = Ti.Map.createView({
+			mapType: Titanium.Map.STANDARD_TYPE,
+			region: {latitude:33.74511, longitude:-84.38993, 
+					latitudeDelta:0.01, longitudeDelta:0.01},
+			animate:true,
+			regionFit:true,
+			userLocation:true,
+			annotations:[artsAnnotation, engineeringAnnotation, scienceAnnotation, sportsAnnotation]
+		});
+		
+		win.add(mapView);
+		//win.add(imageView);
+		// Handle click events on any annotations on this map.
+		mapView.addEventListener('click', function(evt) {
+		 	Ti.API.info('clicked ' + evt.clicksource);
+		 	if(evt.clicksource == "pin"){
+				swapSubtitle(evt.annotation, evt.annotation.subtitle.split(" ")[0]);
+			}
+		});
+		
+		return win;
 	};
 })();
+
+Ti.include("/struct/helpers/annotationHelpers.js");
