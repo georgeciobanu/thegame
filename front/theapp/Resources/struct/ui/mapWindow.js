@@ -10,7 +10,6 @@
 	var platformWidth = Ti.Platform.displayCaps.platformWidth;	
 	//create the main application window
 	Game.ui.createMapWindow = function(_args) {
-
 		var win = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window,{
 			orientationModes:[Ti.UI.PORTRAIT]
 		}));
@@ -18,40 +17,48 @@
 		var artsAnnotation = Ti.Map.createAnnotation({
 			latitude:33.74511,
 			longitude:-84.38993,
+			numMinions: 100,
 			title:"Arts Area",
-			subtitle:'Blue Team',
+			subtitle: "Minions: 100",
+			color:'blue',
 			animate:true,
-			image: '/struct/images/blueArts.png',
+			image: '/struct/images/blue_arts.png',
 			myid: 'arts'// Custom property to uniquely identify this annotation.
 		});
 		
 		var engineeringAnnotation = Ti.Map.createAnnotation({
 			latitude:33.75511,
 			longitude:-84.38993,
+			numMinions: 75,
 			title:"Engineering Area",
-			subtitle:'Red Team',
+			subtitle: "Minions: 75",
+			color:'red',
 			animate:true,
-			image: '/struct/images/redEngineering.png',
+			image: '/struct/images/red_engineering.png',
 			myid: 'engineering' // Custom property to uniquely identify this annotation.
 		});
 		
 		var scienceAnnotation = Ti.Map.createAnnotation({
 			latitude:33.74511,
 			longitude:-84.43993,
+			numMinions: 80,
 			title:"Science Area",
-			subtitle:'Blue Team',
+			subtitle: "Minions: 80",
+			color:'blue',
 			animate:true,
-			image: '/struct/images/blueEngineering.png',
+			image: '/struct/images/blue_science.png',
 			myid: 'science' // Custom property to uniquely identify this annotation.
 		});
 		
 		var sportsAnnotation = Ti.Map.createAnnotation({
 			latitude:33.75511,
 			longitude:-84.43993,
+			numMinions: 90,
 			title:"Sports Area",
-			subtitle:'Red Team',
+			subtitle: "Minions: 90",
+			color:'red',
 			animate:true,
-			image: '/struct/images/redSports.png',
+			image: '/struct/images/red_sports.png',
 			myid: 'sports' // Custom property to uniquely identify this annotation.
 		});
 		 
@@ -69,9 +76,8 @@
 		//win.add(imageView);
 		// Handle click events on any annotations on this map.
 		mapView.addEventListener('click', function(evt) {
-		 	Ti.API.info('clicked ' + evt.clicksource);
-		 	if(evt.clicksource == "pin"){
-				swapSubtitle(evt.annotation, evt.annotation.subtitle.split(" ")[0]);
+			if(evt.clicksource == "pin"){
+				setArea(evt.annotation);
 			}
 		});
 		

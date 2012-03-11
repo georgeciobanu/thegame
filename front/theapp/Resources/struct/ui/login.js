@@ -63,7 +63,8 @@
 
     function tryLogin (email, password) {
       Game.rest.callAPI('POST', '/users', processLoginResponse, {'email': emailTextBox.value, 'password': passwordTextBox.value});
-
+	  Game.rest.callAPI('GET', '/areas', processAreas);
+	  
       function processLoginResponse(e) {
         Ti.API.info('in onload');
         response = JSON.parse(this.responseText);
@@ -72,6 +73,13 @@
           Game.app.mainWindow.open();
           win.close();
         // }
+      }
+      
+      function processAreas(e){
+      	var x;
+      	for(x in e){
+      		Ti.API.info('Got area 1:' + x.type);
+      	}
       }
     }	
 
