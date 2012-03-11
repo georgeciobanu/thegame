@@ -20,6 +20,7 @@ class CreateUsers < ActiveRecord::Migration
       t.float :lat
       t.float :long     
       t.integer :game_map_id
+      t.string :color
 
       t.timestamps
     end
@@ -36,9 +37,18 @@ class CreateUsers < ActiveRecord::Migration
       t.string :name
       t.string :email
       t.integer :team_id
+      t.integer :minion_pool
 
       t.timestamps
     end
+    
+    create_table :minion_groups do |t|
+      t.integer :count
+      t.integer :area_id
+      t.integer :user_id
+
+      t.timestamps
+    end    
     
     add_index :users, :email, unique: true
     add_column :users, :password_digest, :string

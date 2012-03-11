@@ -1,0 +1,2 @@
+class MinionGroupsController < ApplicationController
+end

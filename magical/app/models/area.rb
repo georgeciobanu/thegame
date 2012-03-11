@@ -4,10 +4,8 @@
 #
 #  id          :integer(4)      not null, primary key
 #  name        :string(255)
-#  long        :float
 #  lat         :float
-#  width       :float
-#  height      :float
+#  long        :float
 #  game_map_id :integer(4)
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null
@@ -19,6 +17,7 @@ class Area < ActiveRecord::Base
   # validates :height, numericality: { :greater_than => 0 }
   
   belongs_to :game_map
+  has_many :minion_groups
   
   def index
   end

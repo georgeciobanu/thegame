@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   has_secure_password
   
   belongs_to :team
+  has_many :minion_groups
 
 #  validates :name, presence: true, length: { maximum: 50 }
   valid_email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

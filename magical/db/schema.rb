@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20120229213835) do
     t.float    "lat"
     t.float    "long"
     t.integer  "game_map_id"
+    t.string   "color"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -25,15 +26,23 @@ ActiveRecord::Schema.define(:version => 20120229213835) do
   create_table "game_maps", :force => true do |t|
     t.string   "name"
     t.text     "adjacency_list"
+    t.integer  "game_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
 
   create_table "games", :force => true do |t|
     t.string   "name"
-    t.integer  "game_map_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "minion_groups", :force => true do |t|
+    t.integer  "count"
+    t.integer  "area_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "teams", :force => true do |t|
@@ -49,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20120229213835) do
     t.string   "name"
     t.string   "email"
     t.integer  "team_id"
+    t.integer  "minion_pool"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"

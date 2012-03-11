@@ -4,10 +4,8 @@
 #
 #  id          :integer(4)      not null, primary key
 #  name        :string(255)
-#  long        :float
 #  lat         :float
-#  width       :float
-#  height      :float
+#  long        :float
 #  game_map_id :integer(4)
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null
