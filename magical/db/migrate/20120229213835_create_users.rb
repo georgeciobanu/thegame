@@ -3,7 +3,6 @@ class CreateUsers < ActiveRecord::Migration
     
     create_table :games do |t|
       t.string :name
-      t.integer :game_map_id
       
       t.timestamps
     end
@@ -11,6 +10,7 @@ class CreateUsers < ActiveRecord::Migration
     create_table :game_maps do |t|
       t.string :name
       t.text :adjacency_list
+      t.integer :game_id
 
       t.timestamps
     end
@@ -18,7 +18,7 @@ class CreateUsers < ActiveRecord::Migration
     create_table :areas do |t|
       t.string :name
       t.float :lat
-      t.float :long      
+      t.float :long     
       t.integer :game_map_id
 
       t.timestamps

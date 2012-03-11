@@ -6,16 +6,15 @@ class UsersController < ApplicationController
     # unless the data they provide is invalid and then return error
     Rails.logger.info 'email is: ' + params[:email]
     Rails.logger.info 'pass is: ' + params[:password]
-    respo = User.Play(params[:email], params[:password])
+    @respo = User.Play(params[:email], params[:password])
     Rails.logger.info 'Response is: '
     Rails.logger.info respo
-    render :json => respo
+    render :json => @respo
   end
   
   def info
     # Get all the info needed for the user
-    @user_info = User.info(params[:user_id])
-    
+    @user_info = User.info(params[:user_id])    
   end
   
 end

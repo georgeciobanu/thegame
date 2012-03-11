@@ -10,10 +10,9 @@
 #
 
 class Game < ActiveRecord::Base
-  attr_accessible :name, :game_map_id
+  attr_accessible :name
   
   validates :name, presence: true,
                     uniqueness: { case_sensitive: false }
-  
   has_one :game_map
 end

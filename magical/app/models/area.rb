@@ -19,4 +19,8 @@ class Area < ActiveRecord::Base
   # validates :height, numericality: { :greater_than => 0 }
   
   belongs_to :game_map
+  
+  def index
+  end
+  
 end
