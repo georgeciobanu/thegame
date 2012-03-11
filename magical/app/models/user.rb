@@ -62,6 +62,12 @@ class User < ActiveRecord::Base
       return :result => 'error', :details => @user.errors.full_messages
     end
   end
+  
+  def get_info(user_id)
+    @user = User.find(user_id)
+    @team = Team.find(@user.team_id)
+    
+  end
     
     
 end

@@ -9,12 +9,14 @@
 #
 
 class Team < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name, :game_map_id
 
   validates :name, presence: true, 
                    uniqueness: {case_sensitive: false},
                    length: {minimum: 1}
 
   has_many :members, :class_name => 'User'
+  belongs_to :game_map
+  
 #  has_one :commander, :class_name => 'User'
 end

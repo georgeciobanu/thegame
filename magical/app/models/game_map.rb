@@ -11,6 +11,7 @@
 
 class GameMap < ActiveRecord::Base
   has_many :areas
+  has_many :teams
   
   belongs_to :game
 end
