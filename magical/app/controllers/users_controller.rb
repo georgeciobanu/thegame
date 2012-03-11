@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     Rails.logger.info 'pass is: ' + params[:password]
     @respo = User.Play(params[:email], params[:password])
     Rails.logger.info 'Response is: '
-    Rails.logger.info respo
+    Rails.logger.info @respo
     render :json => @respo
   end
   
