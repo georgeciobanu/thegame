@@ -76,8 +76,8 @@
       }
       
       function processAreas(e){
-        response = JSON.parse(this.responseText);
-      	_.each(response, function(area) {
+        areas = JSON.parse(this.responseText);
+      	_.each(areas, function(area) {
       	  Ti.API.info(area);
       	});
       }
