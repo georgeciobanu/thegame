@@ -14,7 +14,16 @@ class UsersController < ApplicationController
   
   def info
     # Get all the info needed for the user
-    @user_info = User.info(params[:user_id])    
+    @user = User.find(params[:id])
+    @team = Team.find(@user.team_id)
+    @game_map = GameMap.find(@team.game_map_id)
+    @areas = @game_map.areas
+    
+    render :json => { :user => @user, :team => @team, :game_map => @game_map, :areas => @areas }
+  end
+  
+  def index
+    render :json => User.all
   end
   
 end
