@@ -10,58 +10,14 @@
 	var platformWidth = Ti.Platform.displayCaps.platformWidth;	
 	//create the main application window
 	Game.ui.createMapWindow = function(_args) {
+		var areas = [];
+		
+		Game.rest.callAPI('GET', '/areas', processAreas);
+		
 		var win = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window,{
 			orientationModes:[Ti.UI.PORTRAIT]
 		}));
 		
-		var artsAnnotation = Ti.Map.createAnnotation({
-			latitude:33.74511,
-			longitude:-84.38993,
-			numMinions: 100,
-			title:"Arts Area",
-			subtitle: "Minions: 100",
-			color:'blue',
-			animate:true,
-			image: '/struct/images/blue_arts.png',
-			myid: 'arts'// Custom property to uniquely identify this annotation.
-		});
-		
-		var engineeringAnnotation = Ti.Map.createAnnotation({
-			latitude:33.75511,
-			longitude:-84.38993,
-			numMinions: 75,
-			title:"Engineering Area",
-			subtitle: "Minions: 75",
-			color:'red',
-			animate:true,
-			image: '/struct/images/red_engineering.png',
-			myid: 'engineering' // Custom property to uniquely identify this annotation.
-		});
-		
-		var scienceAnnotation = Ti.Map.createAnnotation({
-			latitude:33.74511,
-			longitude:-84.43993,
-			numMinions: 80,
-			title:"Science Area",
-			subtitle: "Minions: 80",
-			color:'blue',
-			animate:true,
-			image: '/struct/images/blue_science.png',
-			myid: 'science' // Custom property to uniquely identify this annotation.
-		});
-		
-		var sportsAnnotation = Ti.Map.createAnnotation({
-			latitude:33.75511,
-			longitude:-84.43993,
-			numMinions: 90,
-			title:"Sports Area",
-			subtitle: "Minions: 90",
-			color:'red',
-			animate:true,
-			image: '/struct/images/red_sports.png',
-			myid: 'sports' // Custom property to uniquely identify this annotation.
-		});
-		 
 		var mapView = Ti.Map.createView({
 			mapType: Titanium.Map.STANDARD_TYPE,
 			region: {latitude:33.74511, longitude:-84.38993, 
@@ -69,8 +25,33 @@
 			animate:true,
 			regionFit:true,
 			userLocation:true,
-			annotations:[artsAnnotation, engineeringAnnotation, scienceAnnotation, sportsAnnotation]
 		});
+		
+		function processAreas(e){
+			var returnedAreas = JSON.parse(this.responseText);
+			_.each(returnedAreas, function(area) {
+				addAnnotation(area);
+			});
+			
+			mapView.addAnnotations(areas);
+		}
+		
+		function addAnnotation(area){
+			Ti.API.info(area);
+			var newArea = Ti.Map.createAnnotation({
+				title: area.name + " Area",
+				latitude: area.lat,
+				longitude: area.long,
+				color: "blue",//area.color,
+				minions: 100,//area.minions,
+				subtitle: "Minions " + 100,//area.minions,
+				animate: false,
+				image: imagesLocation + "blue" + "_" + area.name.charAt(0).toLowerCase() + area.name.slice(1) + "." + imagesType,//area.color,
+				myid: area.name
+			});
+			
+			areas.push(newArea);
+		}
 		
 		win.add(mapView);
 		//win.add(imageView);

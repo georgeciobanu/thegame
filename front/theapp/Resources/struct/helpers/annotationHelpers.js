@@ -1,4 +1,5 @@
 var imagesLocation = "/struct/images/";
+var imagesType = "png";
 var subtitleBase = "Num Minions: ";
 var selectedArea;
 var attackArea;
