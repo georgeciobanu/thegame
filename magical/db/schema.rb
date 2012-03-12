@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20120229213835) do
     t.float    "lat"
     t.float    "long"
     t.integer  "game_map_id"
+    t.integer  "owner_id"
     t.string   "color"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20120229213835) do
   create_table "teams", :force => true do |t|
     t.string   "name"
     t.integer  "game_map_id"
+    t.string   "color"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end

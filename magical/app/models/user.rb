@@ -20,14 +20,42 @@ class User < ActiveRecord::Base
   has_many :minion_groups
 
 #  validates :name, presence: true, length: { maximum: 50 }
-  valid_email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  
+  valid_email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i  
   validates :email, presence: true, 
                     format: {with: valid_email_regex},
                     uniqueness: { case_sensitive: false }
-
   validates :password, length: { minimum: 6 }
 
+  def attack(from_area_id, to_area_id, user_id)
+    @user = User.find(user_id)
+    
+    # Find all the areas where this user has minions
+    @user.minion_groups.each do |minion|
+      @user_areas[minion.area_id] = Area.find(minion.area_id)
+    end
+    
+    # Get the area that the user wants to launch the attack from
+    @from_area = @user_areas[from_area_id]
+    @to_area = Area.find(to_area_id)
+    # TODO(george): Should make sure to not attack own area
+    
+    # If both areas exists
+    if @from_area && @to_area
+      @attacking_minions = @from_area.minion_groups.find_by_user_id(user_id)
+      @defending_minions = @to_area.minion_groups.first
+#      @diff = @attacking_minions.count - @defending_minions.count
+      
+      @win = Random.rand(1.0).round
+      
+      # Kill 20% of minions on each side
+      @defending_minions.count = (@defending_minions.count * 0.8).round
+      @attacking_minions.count = (@attacking_minions.count * 0.8).round
+      
+      if @win == 1 
+        @to_area.owner = @user.team
+      end
+    end # Areas exist and attack is valid
+  end
 
   def self.Play(email, password)
     @user = User.find_by_email(email)
