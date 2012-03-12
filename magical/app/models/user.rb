@@ -105,9 +105,12 @@ class User < ActiveRecord::Base
     @from_area_valid && @to_area_valid
     @attacking_minions = @from_area.minion_groups.find_by_user_id(user_id)
     @defending_minions = @to_area.minion_groups.first
-#      @diff = @attacking_minions.count - @defending_minions.count
+
+    # Sigmoid function http://tinyurl.com/sigmoid-fun
+    @ratio = @attacking_minions.count / @defending_minions.count
     
-    @win = Random.rand(1.0).round
+    @winning_probability = 1/(1+Math.exp(-4*(@ratio-1.02)))
+    @win = Random.rand(1.0) < @winning_probability ? 1 : 0
     
     # Kill 20% of minions on each side
     # TODO(george): override update_attribute such that is count == 0 delete minion_group
