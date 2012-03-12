@@ -84,34 +84,41 @@ class User < ActiveRecord::Base
   def attack(from_area_id, to_area_id, user_id)
     @user = User.find(user_id)
 
-    @from_area = @user.areas.find_by_id(from_area_id)    
+    # TODO(george): count checks
+    @from_area = Area.find(from_area_id)    
     @to_area = Area.find(to_area_id)
 
     # If from area is owned by my team and I have minions on it
     # If to area is not owned by my team
     @from_area_valid = @from_area && 
-                       @from_area.owner == @user.team && 
+                       # @from_area.owner == @user.team && 
                        @user.minion_groups.find_by_area_id(from_area_id)
+    if not @from_area_valid 
+      return 'error', 'You need to attack from an area that you own'
+    end
     @to_area_valid = @to_area && @to_area.owner != @user.team
+    if not @to_area_valid
+      return 'error', "You need to attack an area that does not belong to your team"
+    end
     
-    # If both areas are valid
-    if @from_area_valid && @to_area_valid
-      @attacking_minions = @from_area.minion_groups.find_by_user_id(user_id)
-      @defending_minions = @to_area.minion_groups.first
+    # both areas are valid
+    @from_area_valid && @to_area_valid
+    @attacking_minions = @from_area.minion_groups.find_by_user_id(user_id)
+    @defending_minions = @to_area.minion_groups.first
 #      @diff = @attacking_minions.count - @defending_minions.count
-      
-      @win = Random.rand(1.0).round
-      
-      # Kill 20% of minions on each side
-      @defending_minions.count = (@defending_minions.count * 0.8).round
-      @attacking_minions.count = (@attacking_minions.count * 0.8).round
-      
-      if @win == 1 
-        @to_area.owner = @user.team
-        return true
-      end
-    end # Areas exist and attack is valid
-    return false
+    
+    @win = Random.rand(1.0).round
+    
+    # Kill 20% of minions on each side
+    # TODO(george): override update_attribute such that is count == 0 delete minion_group
+    @defending_minions.update_attribute('count', (@defending_minions.count * 0.8).round)
+    @attacking_minions.update_attribute('count', (@attacking_minions.count * 0.8).round)
+    
+    if @win == 1 
+      @to_area.owner = @user.team
+    end
+    
+    return :won => @win
   end
 
 

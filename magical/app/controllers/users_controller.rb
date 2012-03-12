@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   
   def attack
     @user = User.find params[:id]
-    @result = @user.attack params[:to_area_id], params[:from_area_id], params[:id]
+    @result = @user.attack params[:from_area_id], params[:to_area_id], params[:id]
     Rails.logger.info("Result:")    
     Rails.logger.info(@result)
     
