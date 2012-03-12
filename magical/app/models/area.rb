@@ -7,6 +7,7 @@
 #  lat         :float
 #  long        :float
 #  game_map_id :integer(4)
+#  owner_id    :integer(4)
 #  color       :string(255)
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null
@@ -19,7 +20,7 @@ class Area < ActiveRecord::Base
   
   belongs_to :game_map
   has_many :minion_groups
-  has_one :owner, :class_name => 'Team'
+  belongs_to :owner, :class_name => 'Team'
     
   def index
   end

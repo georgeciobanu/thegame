@@ -3,10 +3,13 @@ Magical::Application.routes.draw do
   resources :users do
     member do
       get 'info'
+      put 'attack'
+      put 'place_minions'
+      put 'move_minions'
     end
   end
 
-  match '/attack' => 'users#attack', :via => :put
+#  match 'attack' => 'users#attack', :via => :post
   
   resources :areas
   resources :teams

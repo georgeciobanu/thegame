@@ -9,19 +9,19 @@ game = Game.create({ name: 'University of Colorado at Boulder' })
 gm = GameMap.create(name: 'the one')
 gm.game = game
 
-areas = gm.areas.create([{ name: 'Sports', lat: 33.74011, long: -84.37093}, 
-                         { name: 'Arts', lat: 33.75111, long: -84.37093},
-                         { name: 'Science', lat: 33.75111, long: -84.39593},
-                         { name: 'Engineering', lat: 33.74011, long: -84.39593} ])
+areas = gm.areas.create([{ name: 'Sports', lat: 33.74011, long: -84.37093, owner_id: 1}, 
+                         { name: 'Arts', lat: 33.75111, long: -84.37093, owner_id: 2},
+                         { name: 'Science', lat: 33.75111, long: -84.39593, owner_id: 3},
+                         { name: 'Engineering', lat: 33.74011, long: -84.39593, owner_id: 1} ])
                          
-teams = gm.teams.create([{ name: 'Team Red' }, { name: 'Team Blue' }, { name: 'Team Green' }])
+teams = gm.teams.create([{ name: 'Team Cool', color: 'green' }, { name: 'Team Awesome', color: 'blue' }, { name: 'Team What?', color: 'red' }])
 
-teams[0].members.create({ name: 'Liviu Chis', email: 'liviu@lindenhoney.com', password: 'liviuchis'})
-teams[0].members.create({ name: 'Jonathan Cottrell', email: 'jonathan@lindenhoney.com', password: 'jonathan'})
-teams[1].members.create({ name: 'Stoked Manuchau', email: 'stoked@lindenhoney.com', password: 'jonathan'})
-teams[1].members.create({ name: 'Tom Forbes', email: 'tom@lindenhoney.com', password: 'tomisrich'})
-teams[2].members.create({ name: 'John Doe', email: 'unknown@lindenhoney.com', password: 'johdoes'})
-teams[2].members.create({ name: 'Anna Karenina', email: 'is_in_love@lindenhoney.com', password: 'jonathan'})
+teams[0].members.create({ name: 'Liviu Chis', email: 'liviu@lindenhoney.com', password: 'liviuchis', minion_pool: 2})
+teams[0].members.create({ name: 'Jonathan Cottrell', email: 'jonathan@lindenhoney.com', password: 'jonathan', minion_pool: 2})
+teams[1].members.create({ name: 'Stoked Manuchau', email: 'stoked@lindenhoney.com', password: 'jonathan', minion_pool: 2})
+teams[1].members.create({ name: 'Tom Forbes', email: 'tom@lindenhoney.com', password: 'tomisrich', minion_pool: 2})
+teams[2].members.create({ name: 'John Doe', email: 'unknown@lindenhoney.com', password: 'johdoes', minion_pool: 2})
+teams[2].members.create({ name: 'Anna Karenina', email: 'is_in_love@lindenhoney.com', password: 'jonathan', minion_pool: 2})
 
 users = User.all
 

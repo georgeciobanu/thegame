@@ -7,6 +7,7 @@
 #  lat         :float
 #  long        :float
 #  game_map_id :integer(4)
+#  owner_id    :integer(4)
 #  color       :string(255)
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null

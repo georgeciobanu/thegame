@@ -13,11 +13,12 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation, :team_id
+  attr_accessible :name, :email, :password, :password_confirmation, :team_id, :minion_pool
   has_secure_password
   
   belongs_to :team
   has_many :minion_groups
+  has_many :areas, :through => :minion_groups
 
 #  validates :name, presence: true, length: { maximum: 50 }
   valid_email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i  
@@ -26,21 +27,69 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }
 
-  def attack(from_area_id, to_area_id, user_id)
+
+  def place_minions(area_id, count, user_id)
     @user = User.find(user_id)
-    
-    # Find all the areas where this user has minions
-    @user.minion_groups.each do |minion|
-      @user_areas[minion.area_id] = Area.find(minion.area_id)
+    if @user.minion_pool < count
+      return 'error', 'Insufficient minions'
     end
     
-    # Get the area that the user wants to launch the attack from
-    @from_area = @user_areas[from_area_id]
+    @area = Area.find(area_id)
+    if @user && @area && @area.owner == @user.team
+      @user.update_attribute('minion_pool', @user.minion_pool - count)
+      # TODO(george): This could fail if there is a bug in the client
+      # where the place_minions command is issued with the wrong user_id
+      @minion_group = @user.minion_groups.find_by_area_id(area_id)
+      @minion_group.update_attribute('count', @minion_group.count + count)
+      return 'success', :area_id => @area.id, :minion_groups => @area.minion_groups
+    else
+      return 'error', 'You can only place minions on an area your team owns'
+    end
+  end
+  
+  
+  def move_minions(from_area_id, to_area_id, count, user_id)
+    @user = User.find(user_id)
+    @from_area = Area.find(from_area_id)
     @to_area = Area.find(to_area_id)
-    # TODO(george): Should make sure to not attack own area
+    if @from_area.owner != @user.team || @to_area.owner != @user.team
+      return 'error', 'Your team needs to own both areas'
+    end
+        
+    @minions = @from_area.minion_groups.find_by_user_id(user_id)
     
-    # If both areas exists
-    if @from_area && @to_area
+    if count >= @minions.count
+      return 'error', 'You need to leave at least ont minion behind'
+    end
+
+    if @user && @from_area && @to_area
+      @minion_src = @user.minion_groups.find_by_area_id(from_area_id)
+      @minion_dst = @user.minion_groups.find_by_area_id(to_area_id)
+      @minions_dst.count += count
+      @minions_src.count -= count
+      @minions_dst.save
+      @minions_src.save
+    end
+    
+    return 'success', :minion_groups => @user.minion_groups, :areas => @user.areas  
+  end
+  
+
+  def attack(from_area_id, to_area_id, user_id)
+    @user = User.find(user_id)
+
+    @from_area = @user.areas.find_by_id(from_area_id)    
+    @to_area = Area.find(to_area_id)
+
+    # If from area is owned by my team and I have minions on it
+    # If to area is not owned by my team
+    @from_area_valid = @from_area && 
+                       @from_area.owner == @user.team && 
+                       @user.minion_groups.find_by_area_id(from_area_id)
+    @to_area_valid = @to_area && @to_area.owner != @user.team
+    
+    # If both areas are valid
+    if @from_area_valid && @to_area_valid
       @attacking_minions = @from_area.minion_groups.find_by_user_id(user_id)
       @defending_minions = @to_area.minion_groups.first
 #      @diff = @attacking_minions.count - @defending_minions.count
@@ -53,9 +102,12 @@ class User < ActiveRecord::Base
       
       if @win == 1 
         @to_area.owner = @user.team
+        return true
       end
     end # Areas exist and attack is valid
+    return false
   end
+
 
   def self.Play(email, password)
     @user = User.find_by_email(email)
