@@ -22,20 +22,18 @@ function setArea(annotation){
 			selectedArea = annotation;
 		}
 		else{
-			Ti.API.info(selectedArea.title + " is attacking " + annotation.title);
+			attackArea = annotation;
+			
+			Ti.API.info(selectedArea.title + " " + selectedArea.color + " is attacking " + attackArea.title + " " + attackArea.color);
 			attackingTurn = false;
 		
-			if(selectedArea.color != annotation.color){
+			if(selectedArea.color != attackArea.color){
 				Ti.API.info("ATTACK!");
-				attackArea = annotation;
 				attack();
 			}
 			else{
-				Ti.API.info("Same Team...");
+				Ti.API.info(selectedArea.color + " cannot attack " + attackArea.color);
 			}
-			
-			selectedArea = null;
-			attackArea = null;
 		}
 	}
 	else{
@@ -46,20 +44,27 @@ function setArea(annotation){
 function attack(){
 	var multiplier = 0.5;
 	var luck = Math.floor(Math.random() * 3) + 1;
-	var attackingMinions = Math.floor(selectedArea.numMinions * luck * multiplier);
+	var attackingMinions = Math.floor(selectedArea.minions * luck * multiplier);
 	
-	Ti.API.info("Attacking area has: " + selectedArea.numMinions + " and is attacking with a force of " + attackingMinions + ", defending with " + attackArea.numMinions);
+	Ti.API.info("Attacking area has: " + selectedArea.minions + " and is attacking with a force of " + attackingMinions + ", defending with " + attackArea.minions);
 	
-	if(attackingMinions > attackArea.numMinions){
+	if(attackingMinions > attackArea.minions){
 		Ti.API.info("Victory");
-		attackArea.numMinions = attackingMinions - attackArea.numMinions;
+		attackArea.minions = attackingMinions - attackArea.minions;
 		attackArea.image = imagesLocation + selectedArea.color + "_" + attackArea.image.split("_")[1];
-		attackArea.subtitle = subtitleBase + attackArea.numMinions;
+		attackArea.subtitle = subtitleBase + attackArea.minions;
 		attackArea.color = selectedArea.color;
+		
+		Ti.API.info("New Color: " + attackArea.color + "\nNew Image: " + attackArea.image + "\nNew minions: " + attackArea.minions);
 	}
 	else{
 		Ti.API.info("Defeat");
-		selectedArea.numMinions = selectedArea.numMinions - (attackArea.numMinions - attackingMinions);
-		selectedArea.subtitle = subtitleBase + selectedArea.numMinions;
+		selectedArea.minions = selectedArea.minions - (attackArea.minions - attackingMinions);
+		selectedArea.subtitle = subtitleBase + selectedArea.minions;
+		
+		Ti.API.info("New Color: " + selectedArea.color + "\nNew Image: " + selectedArea.image + "\nNew minions: " + selectedArea.minions);
 	}
+	
+	selectedArea = null;
+	attackArea = null;
 }

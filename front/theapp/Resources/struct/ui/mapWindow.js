@@ -28,25 +28,33 @@
 		});
 		
 		function processAreas(e){
+			var color = "red";
+			
 			var returnedAreas = JSON.parse(this.responseText);
 			_.each(returnedAreas, function(area) {
-				addAnnotation(area);
+				addAnnotation(area, color);
+				if(color == "red"){
+					color = "blue";
+				}
+				else{
+					color = "red";
+				}
 			});
 			
 			mapView.addAnnotations(areas);
 		}
 		
-		function addAnnotation(area){
+		function addAnnotation(area, color){
 			Ti.API.info(area);
 			var newArea = Ti.Map.createAnnotation({
 				title: area.name + " Area",
 				latitude: area.lat,
 				longitude: area.long,
-				color: "blue",//area.color,
+				color: color,//area.color,
 				minions: 100,//area.minions,
 				subtitle: "Minions " + 100,//area.minions,
 				animate: false,
-				image: imagesLocation + "blue" + "_" + area.name.charAt(0).toLowerCase() + area.name.slice(1) + "." + imagesType,//area.color,
+				image: imagesLocation + color + "_" + area.name.charAt(0).toLowerCase() + area.name.slice(1) + "." + imagesType,//area.color,
 				myid: area.name
 			});
 			
@@ -58,7 +66,9 @@
 		// Handle click events on any annotations on this map.
 		mapView.addEventListener('click', function(evt) {
 			if(evt.clicksource == "pin"){
+				Ti.API.info("event");
 				setArea(evt.annotation);
+				//createView(evt.annotation);
 			}
 		});
 		
@@ -67,3 +77,4 @@
 })();
 
 Ti.include("/struct/helpers/annotationHelpers.js");
+Ti.include("/struct/ui/clickview.js");
