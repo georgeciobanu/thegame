@@ -36,9 +36,9 @@
 		  zIndex: 1000
 		});
 		
-		clickView.addEventListener('dblclick', function(e){
-		  Ti.API.info('Hidden 2xclick');
-		  mapView.zoom(4);
+		clickView.addEventListener('click', function(e){
+		  Ti.API.info('Hidden click');
+		  Alert('You just clicked on the map. Bitches!');
 		});
 		
 		win.add(clickView);
