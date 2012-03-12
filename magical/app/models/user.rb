@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
     end
   end
   
-  
+
   def move_minions(from_area_id, to_area_id, count, user_id)
     @user = User.find(user_id)
     @from_area = Area.find(from_area_id)
@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
     end
         
     @minions = @from_area.minion_groups.find_by_user_id(user_id)
-    
+
     if count >= @minions.count
       return 'error', 'You need to leave at least ont minion behind'
     end
@@ -65,13 +65,19 @@ class User < ActiveRecord::Base
     if @user && @from_area && @to_area
       @minion_src = @user.minion_groups.find_by_area_id(from_area_id)
       @minion_dst = @user.minion_groups.find_by_area_id(to_area_id)
-      @minions_dst.count += count
-      @minions_src.count -= count
-      @minions_dst.save
-      @minions_src.save
+      
+      # If the user does not have a group on the destination area (but someone else on their team does)
+      if @minion_dst == nil
+        @minion_dst = MinionGroup.create(area_id: to_area_id, count: count)
+      else
+        @minion_dst.update_attribute('count', @minion_dst.count + count)
+      end
+      
+      @minion_src.update_attribute('count', @minion_src.count - count)
+      return 'success', :minion_groups => @user.minion_groups, :areas => @user.areas
+    else
+      return 'error', 'I\'m not sure what happened'
     end
-    
-    return 'success', :minion_groups => @user.minion_groups, :areas => @user.areas  
   end
   
 
