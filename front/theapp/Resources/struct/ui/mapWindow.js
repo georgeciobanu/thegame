@@ -26,6 +26,22 @@
 			regionFit:true,
 			userLocation:true,
 		});
+
+		// This should amuse Liviu
+		var clickView = Ti.UI.createView({
+		  top: 0,
+		  left:0,
+      // backgroundColor: 'red',
+      // opacity: 0,
+		  zIndex: 1000
+		});
+		
+		clickView.addEventListener('dblclick', function(e){
+		  Ti.API.info('Hidden 2xclick');
+		  mapView.zoom(4);
+		});
+		
+		win.add(clickView);
 		
 		function processAreas(e){
 			var color = "red";
