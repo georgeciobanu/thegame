@@ -1,6 +1,6 @@
 Magical::Application.routes.draw do
   
-  resources :users do
+  resources :users, :except => [:destroy, :update, :edit, :show, :new, :index] do
     member do
       get 'info'
       put 'attack'
@@ -9,11 +9,11 @@ Magical::Application.routes.draw do
     end
   end
 
-#  match 'attack' => 'users#attack', :via => :post
+#  match 'attack' => 'users#attack', :via => :put
   
-  resources :areas
-  resources :teams
-  resources :users
+  # only using :index
+  resources :areas, :except => [:destroy, :update, :edit, :show, :new, :create]
+  resources :teams, :except => [:destroy, :update, :edit, :show, :new, :create]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
