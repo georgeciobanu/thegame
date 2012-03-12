@@ -5,6 +5,8 @@ Magical::Application.routes.draw do
       get 'info'
     end
   end
+
+  match '/attack' => 'users#attack', :via => :put
   
   resources :areas
   resources :teams

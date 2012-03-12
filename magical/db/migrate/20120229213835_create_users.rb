@@ -20,6 +20,7 @@ class CreateUsers < ActiveRecord::Migration
       t.float :lat
       t.float :long     
       t.integer :game_map_id
+      t.integer :owner_id
       t.string :color
 
       t.timestamps
@@ -28,6 +29,7 @@ class CreateUsers < ActiveRecord::Migration
     create_table :teams do |t|
       t.string :name
       t.integer :game_map_id
+      t.string :color
 
       t.timestamps
     end

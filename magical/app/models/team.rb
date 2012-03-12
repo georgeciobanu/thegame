@@ -10,14 +10,15 @@
 #
 
 class Team < ActiveRecord::Base
-  attr_accessible :name, :game_map_id
+  attr_accessible :name, :game_map_id, :color
 
   validates :name, presence: true, 
                    uniqueness: {case_sensitive: false},
                    length: {minimum: 1}
 
   has_many :members, :class_name => 'User'
+  has_many :areas
   belongs_to :game_map
-  
+
 #  has_one :commander, :class_name => 'User'
 end

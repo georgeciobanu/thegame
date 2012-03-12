@@ -26,4 +26,7 @@ class UsersController < ApplicationController
     render :json => User.all
   end
   
+  def attack
+  end
+  
 end
