@@ -45,7 +45,6 @@
 		}
 		
 		function addAnnotation(area, color){
-			Ti.API.info(area);
 			var newArea = Ti.Map.createAnnotation({
 				title: area.name + " Area",
 				latitude: area.lat,
@@ -66,7 +65,6 @@
 		// Handle click events on any annotations on this map.
 		mapView.addEventListener('click', function(evt) {
 			if(evt.clicksource == "pin"){
-				Ti.API.info("event");
 				setArea(evt.annotation);
 				//createView(evt.annotation);
 			}
@@ -77,4 +75,4 @@
 })();
 
 Ti.include("/struct/helpers/annotationHelpers.js");
-Ti.include("/struct/ui/clickview.js");
+//Ti.include("/struct/ui/clickview.js");

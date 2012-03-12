@@ -7,7 +7,18 @@
 // Code is stripped-down version of Tweetanium, to expose new structure paradigm
 
 (function(){
+	var userColor;
+	
 	Game.ui = {};
+	
+	Game.ui.setUserColor = function(color){
+		Ti.API.info("Setting user color to: " + color);
+		userColor = color;
+	};
+	
+	Game.ui.getUserColor = function(){
+		return userColor;
+	};
 	
 	//create a film strip like view 
 	Game.ui.createFilmStripView = function(_args) {
@@ -45,8 +56,8 @@
 	};
 }());
 
-Ti.include("/struct/ui/login.js");
 Ti.include("/struct/ui/mapWindow.js");
+Ti.include("/struct/ui/login.js");
 Ti.include("/struct/ui/styles.js");
 Ti.include("/struct/ui/tabGroup.js");
 Ti.include("/struct/ui/fooview.js");

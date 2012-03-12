@@ -67,8 +67,18 @@
       function processLoginResponse(e) {
         Ti.API.info('in onload');
         response = JSON.parse(this.responseText);
+        Game.rest.callAPI('GET', '/users/' + response.user.team_id + '/info', getUserInfo);
+	  	
+	  	var color;
+	  	
+	  	function getUserInfo(e){
+	  		var userResponse = JSON.parse(this.responseText);
+	  		color = userResponse.team.name.split(" ")[1];
+	  		Game.ui.setUserColor(color.charAt(0).toLowerCase() + color.slice(1));
+	  	}
+        
         // if (response.result === 'login' || response.result === 'new') {
-          Game.app.mainWindow = Game.ui.createTabGroup();
+          Game.app.mainWindow = Game.ui.createTabGroup(color);
           Game.app.mainWindow.open();
           win.close();
         // }

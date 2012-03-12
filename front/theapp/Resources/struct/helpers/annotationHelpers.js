@@ -19,7 +19,13 @@ function swapSubtitle(annotation, color){
 function setArea(annotation){
 	if(attackingTurn){
 		if(selectedArea == null){
-			selectedArea = annotation;
+			if(annotation.color != Game.ui.getUserColor()){
+				Ti.API.info("User cannot initate on opposing area");
+			}
+			else{
+				Ti.API.info("User initating on " + annotation.title);
+				selectedArea = annotation;
+			}
 		}
 		else{
 			attackArea = annotation;
