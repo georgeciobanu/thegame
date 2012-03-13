@@ -12,79 +12,114 @@
 	Game.ui.createMapWindow = function(_args) {
 		var areas = [];
 		
-		Game.rest.callAPI('GET', '/areas', processAreas);
+    // Game.rest.callAPI('GET', '/areas', processAreas);
 		
 		var win = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window,{
 			orientationModes:[Ti.UI.PORTRAIT]
 		}));
 		
-		var mapView = Ti.Map.createView({
-			mapType: Titanium.Map.STANDARD_TYPE,
-			region: {latitude:33.74511, longitude:-84.38993, 
-					latitudeDelta:0.01, longitudeDelta:0.01},
-			animate:true,
-			regionFit:true,
-			userLocation:true,
-		});
+    // var mapView = Ti.Map.createView({
+    //  mapType: Titanium.Map.STANDARD_TYPE,
+    //  region: {latitude:33.74511, longitude:-84.38993, 
+    //      latitudeDelta:0.01, longitudeDelta:0.01},
+    //  animate:true,
+    //  regionFit:true,
+    //  userLocation:true
+    //       // touchEnabled: false
+    // });
+    // 
+    //     // mapView.addEventListener('regionWillChange', function(e) {
+    //     //   Ti.API.info(e);
+    //     // });
+    // 
+    //     // This should amuse Liviu
+    //     var clickView = Ti.UI.createView({
+    //       top: 0,
+    //       left:0,
+    //           // backgroundColor: 'red',
+    //           // opacity: 0,
+    //       zIndex: 1000
+    //     });
+    //     
+    //     clickView.addEventListener('click', function(e){
+    //       Ti.API.info('Hidden click');
+    //       alert('You just clicked on the map. Bitches!');
+    //     });
+    //     
+    //     win.add(clickView);
+    // 
+    // function processAreas(e){
+    //  var color = "red";
+    //  
+    //  var returnedAreas = JSON.parse(this.responseText);
+    //  _.each(returnedAreas, function(area) {
+    //    addAnnotation(area, color);
+    //    if(color == "red"){
+    //      color = "blue";
+    //    }
+    //    else{
+    //      color = "red";
+    //    }
+    //  });
+    //  
+    //  mapView.addAnnotations(areas);
+    // }
+    // 
+    // function addAnnotation(area, color){
+    //  var newArea = Ti.Map.createAnnotation({
+    //    title: area.name + " Area",
+    //    latitude: area.lat,
+    //    longitude: area.long,
+    //    color: color,//area.color,
+    //    minions: 100,//area.minions,
+    //    subtitle: "Minions " + 100,//area.minions,
+    //    animate: false,
+    //    image: imagesLocation + color + "_" + area.name.charAt(0).toLowerCase() + area.name.slice(1) + "." + imagesType,//area.color,
+    //    myid: area.name
+    //  });
+    //  
+    //  areas.push(newArea);
+    // }
+    // 
+    // win.add(mapView);
+    // //win.add(imageView);
+    // // Handle click events on any annotations on this map.
+    // mapView.addEventListener('click', function(evt) {
+    //  if(evt.clicksource == "pin"){
+    //    setArea(evt.annotation);
+    //    //createView(evt.annotation);
+    //  }
+    // });
 
-		// This should amuse Liviu
-		var clickView = Ti.UI.createView({
-		  top: 0,
-		  left:0,
-      // backgroundColor: 'red',
-      // opacity: 0,
-		  zIndex: 1000
-		});
-		
-		clickView.addEventListener('click', function(e){
-		  Ti.API.info('Hidden click');
-		  Alert('You just clicked on the map. Bitches!');
-		});
-		
-		win.add(clickView);
-		
-		function processAreas(e){
-			var color = "red";
-			
-			var returnedAreas = JSON.parse(this.responseText);
-			_.each(returnedAreas, function(area) {
-				addAnnotation(area, color);
-				if(color == "red"){
-					color = "blue";
-				}
-				else{
-					color = "red";
-				}
-			});
-			
-			mapView.addAnnotations(areas);
-		}
-		
-		function addAnnotation(area, color){
-			var newArea = Ti.Map.createAnnotation({
-				title: area.name + " Area",
-				latitude: area.lat,
-				longitude: area.long,
-				color: color,//area.color,
-				minions: 100,//area.minions,
-				subtitle: "Minions " + 100,//area.minions,
-				animate: false,
-				image: imagesLocation + color + "_" + area.name.charAt(0).toLowerCase() + area.name.slice(1) + "." + imagesType,//area.color,
-				myid: area.name
-			});
-			
-			areas.push(newArea);
-		}
-		
-		win.add(mapView);
-		//win.add(imageView);
-		// Handle click events on any annotations on this map.
-		mapView.addEventListener('click', function(evt) {
-			if(evt.clicksource == "pin"){
-				setArea(evt.annotation);
-				//createView(evt.annotation);
-			}
-		});
+    var img = Ti.UI.createImageView({
+        image:'/struct/images/cu_denver_campus.png'
+    });
+    var simpleView = Ti.UI.createView({
+      top: 200,
+      left: 60,
+      width: 50,
+      height: 50,
+      backgroundColor: 'red',
+      zIndex: 1000
+    });
+    simpleView.addEventListener('click', function(e) {
+      Ti.API.info('Simple view is a great start');
+      Ti.API.info(e);
+    })
+    
+    img.add(simpleView);
+    
+    var imgView = Ti.UI.createScrollView({
+        maxZoomScale: 2.0
+    });
+    imgView.add(img);
+    
+    imgView.addEventListener('click', function(e) {
+      Ti.API.info(e);
+    })
+
+    win.add(imgView);
+
 		
 		return win;
 	};
