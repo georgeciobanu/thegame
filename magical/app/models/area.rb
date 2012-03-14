@@ -14,9 +14,9 @@
 #
 
 class Area < ActiveRecord::Base
-  attr_accessible :lat, :long, :name, :owner_id
-  # validates :width, numericality: { :greater_than => 0 }
-  # validates :height, numericality: { :greater_than => 0 }
+  attr_accessible :lat, :long, :name, :owner_id, :x, :y, :width, :height
+  validates :width, numericality: { :greater_than => 0 }
+  validates :height, numericality: { :greater_than => 0 }
   
   belongs_to :game_map
   has_many :minion_groups

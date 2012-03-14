@@ -10,6 +10,11 @@ var Game = {};
 
 (function(){
 	Game.app = {};
+	
+  Game.db = {};
+  Game.db.user = {};
+  Game.db.teams = {};
+  Game.db.areas = {};
 
 	var empty = {};
 	function mixin(/*Object*/ target, /*Object*/ source){

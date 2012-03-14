@@ -65,20 +65,22 @@
       Game.rest.callAPI('POST', '/users', processLoginResponse, {'email': emailTextBox.value, 'password': passwordTextBox.value});
 	  
       function processLoginResponse(e) {
-        Ti.API.info('in onload');
         response = JSON.parse(this.responseText);
-        Game.rest.callAPI('GET', '/users/' + response.user.team_id + '/info', getUserInfo);
-	  	
-	  	var color;
-	  	
-	  	function getUserInfo(e){
-	  		var userResponse = JSON.parse(this.responseText);
-	  		color = userResponse.team.name.split(" ")[1];
-	  		Game.ui.setUserColor(color.charAt(0).toLowerCase() + color.slice(1));
-	  	}
+        Ti.API.info(response);      
+        Game.db.user = response.user;
+        // Game.rest.callAPI('GET', '/users/' + response.user.id + '/info', getUserInfo);
+
+      // var color;
+
+      // function getUserInfo(e) {
+      //  var userResponse = JSON.parse(this.responseText);
+      //  Game.db.user = response.user;
+      //  color = userResponse.team.name.split(" ")[1];
+      //  Game.ui.setColor(color.charAt(0).toLowerCase() + color.slice(1));
+      // }
         
         // if (response.result === 'login' || response.result === 'new') {
-          Game.app.mainWindow = Game.ui.createTabGroup(color);
+          Game.app.mainWindow = Game.ui.createTabGroup();
           Game.app.mainWindow.open();
           win.close();
         // }

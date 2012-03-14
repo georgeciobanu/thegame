@@ -22,6 +22,10 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :game_map_id
       t.integer :owner_id
       t.string :color
+      t.integer :x
+      t.integer :y
+      t.integer :width
+      t.integer :height        
 
       t.timestamps
     end

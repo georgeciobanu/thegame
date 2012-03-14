@@ -14,9 +14,9 @@ class UsersController < ApplicationController
     @game_map = GameMap.find(@team.game_map_id)
     @areas = @game_map.areas
     
-    render :json => { :user => @user, :team => @team, :game_map => @game_map, :areas => @areas }
+    render :json => { :user => @user, :team => @team, :game_map => @game_map, :areas => @areas, :minion_groups => @user.minion_groups }
   end
-  
+
   def index
     render :json => User.all
   end

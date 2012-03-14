@@ -142,7 +142,7 @@ class User < ActiveRecord::Base
         dm.destroy
       end
     end
-    
+
     # TODO(george): We should ensure that some attacking minions always survive - some to stay behind, and some to take over the new area
     @attacking_minions.update_attribute('count', (@attacking_minions.count * 0.8).floor)
     Rails.logger.info('Player ' + user_id.to_s() + ' minion groups after attack:')
@@ -150,8 +150,8 @@ class User < ActiveRecord::Base
     if @attacking_minions.count == 0
       @attacking_minions.destroy
     end
-    
-    
+
+
     if @win == 1 
       @to_area.update_attribute('owner_id', @user.team_id)
     end

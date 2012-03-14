@@ -7,7 +7,8 @@
 // Code is stripped-down version of Tweetanium, to expose new structure paradigm
 
 (function() {
-	var platformWidth = Ti.Platform.displayCaps.platformWidth;	
+	var platformWidth = Ti.Platform.displayCaps.platformWidth;
+	
 	//create the main application window
 	Game.ui.createMapWindow = function(_args) {
 		var areas = [];
@@ -17,36 +18,65 @@
 		var win = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window,{
 			orientationModes:[Ti.UI.PORTRAIT]
 		}));
-
-    var img = Ti.UI.createImageView({
+        
+    var imgView = Ti.UI.createImageView({
         image:'/struct/images/cu_denver_campus.png'
     });
-    var simpleView = Ti.UI.createView({
-      top: 200,
-      left: 60,
-      width: 50,
-      height: 50,
-      backgroundColor: 'red',
-      zIndex: 1000
-    });
-    simpleView.addEventListener('click', function(e) {
-      Ti.API.info('Simple view is a great start');
-      Ti.API.info(e);
-    })
     
-    img.add(simpleView);
+
     
-    var imgView = Ti.UI.createScrollView({
+    var mapView = Ti.UI.createScrollView({
         maxZoomScale: 2.0
     });
-    imgView.add(img);
+    mapView.add(imgView);
+    win.add(mapView);
+
+    win.addEventListener('focus', getMapInfo);
     
-    imgView.addEventListener('click', function(e) {
-      Ti.API.info(e);
-    })
+    
+    
+    function getMapInfo(e) {
+      // Get areas, teams and the number of minions the player owns on each of those (info?)
+      Game.rest.callAPI('GET', '/users/' + Game.db.user.id + '/info', refreshMapView);
+    }
+    
+    function refreshMapView(e) {
+      response = JSON.parse(this.responseText);
 
-    win.add(imgView);
-
+      
+      // _.each(response.teams, function(team) {
+      //   Game.db.teams[team.id] = team;
+      //   Ti.API.info('TEAM: ' + team.id);
+      // });
+      
+      Ti.API.info(response.areas);
+      
+      _.each(response.areas, function(area) {
+        Game.db.areas[area.id] = area;
+        var areaView = Ti.UI.createView({
+          top: area.y,
+          left: area.x,
+          backgroundColor: 'red',
+          opacity: 0.8,
+          width: area.width,
+          height: area.height,
+          
+          // Custom properties
+          selected: false
+        });
+        
+        // var nameLabel = Ti.UI.createLabel({
+        //   text: area.name
+        // });
+        Ti.API.info(areaView);
+        // areaView.add(nameLabel);
+        areaView.addEventListener('click', function(evt) {
+          this.selected = !this.selected;
+          this.opacity = 1 - this.opacity;
+        });
+        imgView.add(areaView);
+      });
+    }
 		
 		return win;
 	};
