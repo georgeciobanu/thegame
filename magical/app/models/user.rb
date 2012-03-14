@@ -80,11 +80,21 @@ class User < ActiveRecord::Base
     end
   end
   
-
+  # Attack an area using minions from any one neighboring areas
+  # Check to see if the areas are adjacent
+  # Check if the areas are valid
+  # Attack all of the defending minion groups
+  # Remove any minion groups that have been completely decimated
   def attack(from_area_id, to_area_id, user_id)
+    Rails.logger.info('User ' + user_id + ' attacking from area ' + from_area_id + ' to area ' + to_area_id)
     @user = User.find(user_id)
 
-    # TODO(george): count checks
+    # TODO(george): This check needs to be done more thoroughly, somewhere else
+    if @user.minion_groups.find_by_area_id(from_area_id) && @user.minion_groups.find_by_area_id(from_area_id).count == 0
+      alert('Man, there is an empty minion group. See console.');
+      Rails.logger.info(@user.minion_groups.find_by_area_id(from_area_id));
+    end
+    
     @from_area = Area.find(from_area_id)    
     @to_area = Area.find(to_area_id)
 
@@ -93,33 +103,59 @@ class User < ActiveRecord::Base
     @from_area_valid = @from_area && 
                        # @from_area.owner == @user.team && 
                        @user.minion_groups.find_by_area_id(from_area_id)
-    if not @from_area_valid 
-      return 'error', 'You need to attack from an area that you own'
+
+    if not @from_area_valid
+      return 'error', 'You need to attack from an area that you have minions on'
     end
+    
     @to_area_valid = @to_area && @to_area.owner != @user.team
     if not @to_area_valid
-      return 'error', "You need to attack an area that does not belong to your team"
+      return 'error', 'You can only attack an area that does not belong to your team'
     end
-    
-    # both areas are valid
-    @from_area_valid && @to_area_valid
-    @attacking_minions = @from_area.minion_groups.find_by_user_id(user_id)
-    @defending_minions = @to_area.minion_groups.first
 
-    # Sigmoid function http://tinyurl.com/sigmoid-fun
-    @ratio = @attacking_minions.count / @defending_minions.count
+    @attacking_minions = @from_area.minion_groups.find_by_user_id(user_id)
+    Rails.logger.info('User ' + user_id.to_s() + ' attacking from area ' + from_area_id.to_s() + ' to area ' + to_area_id.to_s() + ' with ' + @attacking_minions.count.to_s() + ' minions')
+    # Find the minion groups of the team that owns the area, in the attacked area
+    @defending_minions = @to_area.owner.minion_groups.where(:area_id => 3).all
     
-    @winning_probability = 1/(1+Math.exp(-4*(@ratio-1.02)))
+    @defending_minions_count = 0
+    @defending_minions.each { |minion_group| @defending_minions_count += minion_group.count }
+    Rails.logger.info('Team ' + @to_area.owner.color.to_s() + ' defending area ' + to_area_id.to_s() + ' with ' + @defending_minions_count.to_s() + ' minions')
+    Rails.logger.info('Team ' + @to_area.owner.color.to_s() + ' defended by minion groups:')
+    Rails.logger.info(@defending_minions.to_s())
+
+    # Model the attack probability as a x-shifted sigmoid function http://tinyurl.com/sigmoid-fun
+    @ratio = @attacking_minions.count / @defending_minions_count
+    
+    @winning_probability = 1 / (1 + Math.exp(-4 * (@ratio - 1.02)))
     @win = Random.rand(1.0) < @winning_probability ? 1 : 0
     
+    Rails.logger.info('Win: ' + @win.to_s())
+    
     # Kill 20% of minions on each side
-    # TODO(george): override update_attribute such that is count == 0 delete minion_group
-    @defending_minions.update_attribute('count', (@defending_minions.count * 0.8).round)
-    @attacking_minions.update_attribute('count', (@attacking_minions.count * 0.8).round)
+    Rails.logger.info(@defending_minions.to_s())    
+    @defending_minions.each { |dm| dm.update_attribute('count', (dm.count * 0.8).floor) }
+    Rails.logger.info('Team ' + @to_area.owner.color.to_s() + ' minion groups after attack:')
+    Rails.logger.info(@defending_minions)    
+    @defending_minions.each do |dm| 
+      if dm.count == 0
+        dm.destroy
+      end
+    end
+    
+    # TODO(george): We should ensure that some attacking minions always survive - some to stay behind, and some to take over the new area
+    @attacking_minions.update_attribute('count', (@attacking_minions.count * 0.8).floor)
+    Rails.logger.info('Player ' + user_id.to_s() + ' minion groups after attack:')
+    Rails.logger.info(@attacking_minions.count.to_s())
+    if @attacking_minions.count == 0
+      @attacking_minions.destroy
+    end
+    
     
     if @win == 1 
-      @to_area.owner = @user.team
+      @to_area.update_attribute('owner_id', @user.team_id)
     end
+    Rails.logger.info('Attacked area now belongs to team: ' + @to_area.owner.color)
     
     return :won => @win
   end
@@ -143,10 +179,10 @@ class User < ActiveRecord::Base
     
     # We first find the team with the least members
     # The below is a HACK since I'm injecting SQL to optimize this query (limiting the results to one)
-    @teamid_count_hash = User.count(:team_id, :group => 'team_id', :order => 'count_team_id ASC LIMIT 1')
+    @team_id_count_hash = User.count(:team_id, :group => 'team_id', :order => 'count_team_id ASC LIMIT 1')
     
     # Extract the key-pair as an array, and get the team_id from the resulting array
-    @team_id = @teamid_count_hash.first[0]
+    @team_id = @team_id_count_hash.first[0]
     
     #And then we finally get the team
     @team = Team.find(@team_id)

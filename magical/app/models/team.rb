@@ -20,6 +20,7 @@ class Team < ActiveRecord::Base
   has_many :members, :class_name => 'User'
   has_many :areas
   belongs_to :game_map
+  has_many :minion_groups, :through => :members
 
 #  has_one :commander, :class_name => 'User'
 end

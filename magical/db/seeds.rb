@@ -6,32 +6,33 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 game = Game.create({ name: 'University of Colorado at Boulder' })
-gm = GameMap.create(name: 'the one')
-gm.game = game
+gm = game.create_game_map(name: 'the one')
 
-areas = gm.areas.create([{ name: 'Sports', lat: 33.74011, long: -84.37093, owner_id: 1}, 
-                         { name: 'Arts', lat: 33.75111, long: -84.37093, owner_id: 2},
-                         { name: 'Science', lat: 33.75111, long: -84.39593, owner_id: 3},
-                         { name: 'Engineering', lat: 33.74011, long: -84.39593, owner_id: 1} ])
-                         
-teams = gm.teams.create([{ name: 'Team Cool', color: 'green' }, { name: 'Team Awesome', color: 'blue' }, { name: 'Team What?', color: 'red' }])
+areas = gm.areas.create([{ name: 'Sports', lat: 33.74011, long: -84.37093, owner_id: 2}, 
+                         { name: 'Arts', lat: 33.75111, long: -84.37093, owner_id: 3},
+                         { name: 'Science', lat: 33.75111, long: -84.39593, owner_id: 1},
+                         { name: 'Engineering', lat: 33.74011, long: -84.39593, owner_id: 3} ])
 
-teams[0].members.create({ name: 'Liviu Chis', email: 'liviu@lindenhoney.com', password: 'liviuchis', minion_pool: 2})
-teams[0].members.create({ name: 'Jonathan Cottrell', email: 'jonathan@lindenhoney.com', password: 'jonathan', minion_pool: 2})
-teams[1].members.create({ name: 'Stoked Manuchau', email: 'stoked@lindenhoney.com', password: 'jonathan', minion_pool: 2})
-teams[1].members.create({ name: 'Tom Forbes', email: 'tom@lindenhoney.com', password: 'tomisrich', minion_pool: 2})
-teams[2].members.create({ name: 'John Doe', email: 'unknown@lindenhoney.com', password: 'johdoes', minion_pool: 2})
-teams[2].members.create({ name: 'Anna Karenina', email: 'is_in_love@lindenhoney.com', password: 'jonathan', minion_pool: 2})
+teams = gm.teams.create([{ name: 'Team Green', color: 'green' }, { name: 'Team Blue', color: 'blue' }, { name: 'Team Red', color: 'red' }])
+
+Team.find(2).members.create({ name: 'Liviu Chis', email: 'liviu@lindenhoney.com', password: 'liviuchis', minion_pool: 2})
+Team.find(2).members.create({ name: 'Jonathan Cottrell', email: 'jonathan@lindenhoney.com', password: 'jonathan', minion_pool: 2})
+Team.find(1).members.create({ name: 'Stoked Manuchau', email: 'stoked@lindenhoney.com', password: 'jonathan', minion_pool: 2})
+Team.find(1).members.create({ name: 'Tom Forbes', email: 'tom@lindenhoney.com', password: 'tomisrich', minion_pool: 2})
+Team.find(3).members.create({ name: 'John Doe', email: 'unknown@lindenhoney.com', password: 'johdoes', minion_pool: 2})
+Team.find(3).members.create({ name: 'Anna Karenina', email: 'is_in_love@lindenhoney.com', password: 'jonathan', minion_pool: 2})
 
 users = User.all
 
-users.each do |user|
-  # Each user should own a random number of areas > 1
-  num_areas = Random.rand(Area.count + 1)
-  
-  # Each area should contain a minion group of random size, at most 100
-  (1..num_areas).each do |area_id|
-    user.minion_groups.create({ area_id: area_id, count: 1 + Random.rand(100)})
+user_area_mapping = {1 => [1, 2, 4], 
+                 2 => [1], 
+                 3 => [1, 3, 4], 
+                 4 => [3], 
+                 5 => [2, 3, 4], 
+                 6 => [1, 4]}
+
+user_area_mapping.each_key do |user_id|
+  user_area_mapping[user_id].each do |area_id|
+    User.find(user_id).minion_groups.create({ area_id: area_id, count: 3})
   end
 end
-
