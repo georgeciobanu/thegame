@@ -41,7 +41,6 @@
     }
     
     function refreshMapView(e) {
-        Ti.API.info(this.responseText);      
       response = JSON.parse(this.responseText);
       Game.db.user.team = response.team;
       Game.db.user.minion_groups = response.my_minion_groups;
@@ -96,17 +95,28 @@
           this.opacity = 1 - this.opacity;
         });
         Game.db.areas[area.id].view = areaView;
-        imgView.add(areaView);
+        mapView.add(areaView);
       });
 
       Ti.API.info('minion count per area');
       _.each(response.area_owner_minion_count, function (owner_minion_count, area_id) {
         Ti.API.info('Area:' + area_id);
-        Ti.API.info('Owner minion count:' + minion_count);        
+        Ti.API.info('Owner minion count:' + owner_minion_count);        
         Game.db.areas[area_id].owner_minion_count = owner_minion_count;
       });
-      
-      
+
+
+      Ti.API.info(response.my_team_minion_count);
+      _.each(response.my_team_minion_count, function (minion_count, area_id) {
+        Ti.API.info('Area:' + area_id);
+        Ti.API.info('My team minion count:' + minion_count);        
+        Game.db.areas[area_id].my_team_minion_count = minion_count;
+        var myTeamMinionCountLabel = Ti.UI.createLabel({
+          text: 'Your team has: ' + minion_count + ' minions here',
+          font: {fontSize:4}
+        });
+        Game.db.areas[area_id].view.add(myTeamMinionCountLabel);
+      });
     }
 		
 		return win;
