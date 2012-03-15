@@ -68,7 +68,7 @@ class UsersController < ApplicationController
   def move_minions
     @user = User.find params[:id]
     if params[:count]
-      params[:count] = @user.minion_groups.find_by_area_id(params[:from_area_id]).count
+      params[:count] = @user.minion_groups.find_by_area_id(params[:from_area_id]).count - 1
     end
     @result = @user.move_minions params[:from_area_id], params[:to_area_id], Integer(params[:count]), params[:id]
     Rails.logger.info("Result:")    

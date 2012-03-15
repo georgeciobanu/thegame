@@ -11,10 +11,6 @@
 	
 	//create the main application window
 	Game.ui.createMapWindow = function(_args) {
-		var areas = [];
-		
-    // Game.rest.callAPI('GET', '/areas', processAreas);
-		
 		var win = Ti.UI.createWindow(Game.combine(Game.ui.properties.Window,{
 			orientationModes:[Ti.UI.PORTRAIT]
 		}));
@@ -23,18 +19,13 @@
         image:'/struct/images/cu_denver_campus.png'
     });
     
-
-    
     var mapView = Ti.UI.createScrollView({
         maxZoomScale: 4.0
     });
     mapView.add(imgView);
     win.add(mapView);
-
     win.addEventListener('focus', getMapInfo);
-    
-    
-    
+
     function getMapInfo(e) {
       // Get areas, teams and the number of minions the player owns on each of those (info?)
       Game.rest.callAPI('GET', '/users/' + Game.db.user.id + '/info', refreshMapView);
@@ -64,35 +55,78 @@
           layout: 'vertical',
           
           // Custom properties
-          selected: false
+          area_id: area.id
         });
                 
         var nameLabel = Ti.UI.createLabel({
           text: area.name,
-          font: {fontSize:4}
-          // height: 10,
-          // width: 30
+          font: {fontSize:8}
         });
         Ti.API.info(areaView);
         areaView.add(nameLabel);
 
         var ownerLabel = Ti.UI.createLabel({
           text: Game.db.teams[area.owner_id].name,
-          font: {fontSize:4}
+          font: {fontSize:8}
         });
         Ti.API.info(areaView);
         areaView.add(ownerLabel);
-        // if ()
-        // var myMinionsLabel = Ti.UI.createLabel({
-        //   text: Game.db.teams[area.owner_id].name,
-        //   font: {fontSize:4}
-        // });
-        // Ti.API.info(areaView);
-        // areaView.add(ownerLabel);
 
         areaView.addEventListener('click', function(evt) {
-          this.selected = !this.selected;
-          this.opacity = 1 - this.opacity;
+          
+          
+          // TODO(george): Move all the non-UI code in a helper file
+          
+          
+          // Only interact with areas I have minions on
+          Ti.API.info(evt.source);
+          minion_group_on_area = null;
+          minion_group_on_area = _.find(Game.db.user.minion_groups, 
+                                        function (minion_group) {
+                                          return minion_group.area_id === evt.source.area_id;
+                                        });
+          
+          if (minion_group_on_area === null) {
+            return;
+          }
+            
+          switch (Game.ui.selected_id) {
+            // This is the first click on an area -> select it
+            case -1:
+              Game.ui.selected_id = evt.source.area_id;
+              this.opacity = 1 - this.opacity;
+              break;
+            
+            // This is the second click on the same area  -> deselect it
+            case evt.source.area_id:
+              Game.ui.selected_id = -1;
+              this.opacity = 1 - this.opacity;                          
+              break;
+              
+            // This is the second click on a different area  -> move or attack
+            default:
+              // Second click was on our team's area -> it's a Move request
+              // otherwise, if it's an opponent's area that's adjacent, it's an Attack request
+              if (Game.db.areas[evt.source.area_id].owner_id == Game.db.user.team_id) {
+                // Note: the Move API accepts a count - by default it moves all the minions (but one)
+                Game.rest.callAPI('PUT', '/user/' + Game.db.user.id + '/move',
+                                  parseMoveResponse, 
+                                  {from_area_id: Game.ui.selected_id, to_area_id: evt.source.area_id});
+                // This is a good time to update the whole thing
+              } else { // Second click was on opponent's area -> it's an Attack request
+                Game.rest.callAPI('PUT', '/user/' + Game.db.user.id + '/attack',
+                                  parseAttackResponse,
+                                  {from_area_id: Game.ui.selected_id, to_area_id: evt.source.area_id});
+              }
+              this.opacity = 1 - this.opacity;                        
+          }
+          
+
+          if (Game.ui.selected_id == evt.source.area_id) {
+            // Deselect the square
+          } else 
+          Game.ui.selected_id = this.area_id;
+
         });
         Game.db.areas[area.id].view = areaView;
         mapView.add(areaView);
@@ -113,12 +147,12 @@
         Game.db.areas[area_id].my_team_minion_count = minion_count;
         var myTeamMinionCountLabel = Ti.UI.createLabel({
           text: 'Your team has: ' + minion_count + ' minions here',
-          font: {fontSize:4}
+          font: {fontSize:8}
         });
         Game.db.areas[area_id].view.add(myTeamMinionCountLabel);
       });
     }
-		
+
 		return win;
 	};
 })();

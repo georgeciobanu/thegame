@@ -10,6 +10,7 @@
 	var userColor;
 	
 	Game.ui = {};
+  Game.ui.selected_id = -1;
 	
 	Game.ui.setUserColor = function(color){
 		Ti.API.info("Setting user color to: " + color);
