@@ -26,7 +26,7 @@
 
     
     var mapView = Ti.UI.createScrollView({
-        maxZoomScale: 2.0
+        maxZoomScale: 4.0
     });
     mapView.add(imgView);
     win.add(mapView);
@@ -41,41 +41,72 @@
     }
     
     function refreshMapView(e) {
+        Ti.API.info(this.responseText);      
       response = JSON.parse(this.responseText);
-
+      Game.db.user.team = response.team;
+      Game.db.user.minion_groups = response.my_minion_groups;
+      Game.db.game_map = response.game_map;
+      Game.db.team_minion_groups = response.team_minion_groups;
       
-      // _.each(response.teams, function(team) {
-      //   Game.db.teams[team.id] = team;
-      //   Ti.API.info('TEAM: ' + team.id);
-      // });
-      
-      Ti.API.info(response.areas);
+      _.each(response.teams, function(team) {
+        Game.db.teams[team.id] = team;
+        Ti.API.info('TEAM: ' + team.id);
+      });
       
       _.each(response.areas, function(area) {
         Game.db.areas[area.id] = area;
         var areaView = Ti.UI.createView({
           top: area.y,
           left: area.x,
-          backgroundColor: 'red',
+          backgroundColor: Game.db.teams[area.owner_id].color,
           opacity: 0.8,
           width: area.width,
           height: area.height,
+          layout: 'vertical',
           
           // Custom properties
           selected: false
         });
-        
-        // var nameLabel = Ti.UI.createLabel({
-        //   text: area.name
-        // });
+                
+        var nameLabel = Ti.UI.createLabel({
+          text: area.name,
+          font: {fontSize:4}
+          // height: 10,
+          // width: 30
+        });
         Ti.API.info(areaView);
-        // areaView.add(nameLabel);
+        areaView.add(nameLabel);
+
+        var ownerLabel = Ti.UI.createLabel({
+          text: Game.db.teams[area.owner_id].name,
+          font: {fontSize:4}
+        });
+        Ti.API.info(areaView);
+        areaView.add(ownerLabel);
+        // if ()
+        // var myMinionsLabel = Ti.UI.createLabel({
+        //   text: Game.db.teams[area.owner_id].name,
+        //   font: {fontSize:4}
+        // });
+        // Ti.API.info(areaView);
+        // areaView.add(ownerLabel);
+
         areaView.addEventListener('click', function(evt) {
           this.selected = !this.selected;
           this.opacity = 1 - this.opacity;
         });
+        Game.db.areas[area.id].view = areaView;
         imgView.add(areaView);
       });
+
+      Ti.API.info('minion count per area');
+      _.each(response.area_owner_minion_count, function (owner_minion_count, area_id) {
+        Ti.API.info('Area:' + area_id);
+        Ti.API.info('Owner minion count:' + minion_count);        
+        Game.db.areas[area_id].owner_minion_count = owner_minion_count;
+      });
+      
+      
     }
 		
 		return win;

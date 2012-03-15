@@ -116,7 +116,7 @@ class User < ActiveRecord::Base
     @attacking_minions = @from_area.minion_groups.find_by_user_id(user_id)
     Rails.logger.info('User ' + user_id.to_s() + ' attacking from area ' + from_area_id.to_s() + ' to area ' + to_area_id.to_s() + ' with ' + @attacking_minions.count.to_s() + ' minions')
     # Find the minion groups of the team that owns the area, in the attacked area
-    @defending_minions = @to_area.owner.minion_groups.where(:area_id => 3).all
+    @defending_minions = @to_area.owner.minion_groups.where(:area_id => @to_area.id).all
     
     @defending_minions_count = 0
     @defending_minions.each { |minion_group| @defending_minions_count += minion_group.count }

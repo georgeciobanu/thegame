@@ -10,11 +10,37 @@ class UsersController < ApplicationController
   def info
     # Get all the info needed for the user
     @user = User.find(params[:id])
-    @team = Team.find(@user.team_id)
-    @game_map = GameMap.find(@team.game_map_id)
+    @my_team = Team.find(@user.team_id)
+    @game_map = GameMap.find(@my_team.game_map_id)
     @areas = @game_map.areas
     
-    render :json => { :user => @user, :team => @team, :game_map => @game_map, :areas => @areas, :minion_groups => @user.minion_groups }
+    # Return the minion count for each area, of the team that owns it
+    @area_owner_minion_count = {}
+    @area_my_team_minion_count = {}
+    Area.all.each do |area|
+      @sum = MinionGroup.sum(:count, :conditions => "area_id =" + area.id.to_s() + " AND user_id IN" + area.owner.member_ids.
+          to_s().
+          # Replace square brackets with parens
+          sub('[', '(').
+          sub(']', ')'))
+      @area_owner_minion_count[area.id] = @sum
+      Rails.logger.info('Sum is: ' + @sum.to_s())
+      
+      # Return the minion count for my team, for all areas where we have minions
+      @my_team_sum = MinionGroup.sum(:count, :conditions => "area_id =" + area.id.to_s() + " AND user_id IN" + @my_team.member_ids.
+          to_s().
+          # Replace square brackets with parens
+          sub('[', '(').
+          sub(']', ')'))
+      if @my_team_sum > 0
+        @area_my_team_minion_count[area.id] = @my_team_sum
+      end
+    end
+
+    render :json => { :user => @user, :team => @my_team, :game_map => @game_map,
+                      :areas => @areas, :my_minion_groups => @user.minion_groups,
+                      :team_minion_groups => @my_team.minion_groups, :area_owner_minion_count => @area_owner_minion_count,
+                      :teams => Team.all }
   end
 
   def index
