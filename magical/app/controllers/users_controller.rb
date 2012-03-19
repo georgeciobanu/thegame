@@ -47,13 +47,13 @@ class UsersController < ApplicationController
   def index
     render :json => User.all
   end
-  
+
   def attack
     @user = User.find params[:id]
     @result = @user.attack params[:from_area_id], params[:to_area_id], params[:id]
     Rails.logger.info("Result:")    
     Rails.logger.info(@result)
-    
+
     render :json => @result
   end
 
@@ -67,13 +67,14 @@ class UsersController < ApplicationController
   
   def move_minions
     @user = User.find params[:id]
-    if params[:count]
+    if not params[:count]
       params[:count] = @user.minion_groups.find_by_area_id(params[:from_area_id]).count - 1
     end
+    
     @result = @user.move_minions params[:from_area_id], params[:to_area_id], Integer(params[:count]), params[:id]
     Rails.logger.info("Result:")    
     Rails.logger.info(@result)
-    
+
     render :json => @result
   end
   

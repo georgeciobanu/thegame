@@ -31,9 +31,9 @@ class User < ActiveRecord::Base
   def place_minions(area_id, count, user_id)
     @user = User.find(user_id)
     if @user.minion_pool < count
-      return 'error', 'Insufficient minions'
+      return :result => 'error', :info => 'Insufficient minions'
     end
-    
+
     @area = Area.find(area_id)
     if @user && @area && @area.owner == @user.team
       @user.update_attribute('minion_pool', @user.minion_pool - count)
@@ -41,9 +41,9 @@ class User < ActiveRecord::Base
       # where the place_minions command is issued with the wrong user_id
       @minion_group = @user.minion_groups.find_by_area_id(area_id)
       @minion_group.update_attribute('count', @minion_group.count + count)
-      return 'success', :area_id => @area.id, :minion_groups => @area.minion_groups
+      return :result => 'success', :area_id => @area.id, :minion_groups => @area.minion_groups
     else
-      return 'error', 'You can only place minions on an area your team owns'
+      return :result => 'error', :info => 'You can only place minions on an area your team owns'
     end
   end
   
@@ -52,14 +52,14 @@ class User < ActiveRecord::Base
     @user = User.find(user_id)
     @from_area = Area.find(from_area_id)
     @to_area = Area.find(to_area_id)
-    if @from_area.owner != @user.team || @to_area.owner != @user.team
-      return 'error', 'Your team needs to own both areas'
+    if @to_area.owner != @user.team
+      return :result => 'error', :info => 'Your team needs to own the destination area'
     end
         
     @minions = @from_area.minion_groups.find_by_user_id(user_id)
 
     if count >= @minions.count
-      return 'error', 'You need to leave at least ont minion behind'
+      return :result => 'error', :info => 'You need to leave at least ont minion behind'
     end
 
     if @user && @from_area && @to_area
@@ -74,11 +74,12 @@ class User < ActiveRecord::Base
       end
       
       @minion_src.update_attribute('count', @minion_src.count - count)
-      return 'success', :minion_groups => @user.minion_groups, :areas => @user.areas
+      return :result => 'success', :minion_groups => @user.minion_groups, :areas => @user.areas
     else
-      return 'error', 'I\'m not sure what happened'
+      return :result => 'error', :info => 'I\'m not sure what happened'
     end
   end
+  
   
   # Attack an area using minions from any one neighboring areas
   # Check to see if the areas are adjacent
