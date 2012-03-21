@@ -1,5 +1,6 @@
 (function() {
 
+  Game.mapWindow = {};
   Game.helpers.areaViewClickHandler = function(evt) {
     
     // TODO(george): Move all the non-UI code in a helper file
@@ -39,6 +40,7 @@
         // TODO(george): check that the areas are adjacent      
         Ti.API.info('Second click on different area (not same as first click)');
         // Second click was on our team's area -> it's a Move request
+
         Ti.API.info('Owner of area you just clicked on: ' + Game.db.areas[evt.source.area_id].owner_id);
         Ti.API.info('Your team id: ' + Game.db.user.team_id);
         if (Game.db.areas[evt.source.area_id].owner_id == Game.db.user.team_id) {
@@ -68,9 +70,11 @@
       setTimeout(function(){Ti.App.fireEvent("app:msg",{msg:"Whoops: " + response.info });},1000);
     } else {
       setTimeout(function(){Ti.App.fireEvent("app:msg",{msg:"Area attacked."});},1000);
+      Game.mapWindow.getMapInfo();      
       // TODO(george): refresh stuff
     }      
   }
+
 
   function parseMoveResponse() {
     response = JSON.parse(this.responseText);
@@ -79,6 +83,7 @@
     } else {
       setTimeout(function(){Ti.App.fireEvent("app:msg",{msg:"Minions moved."});},1000);
       // TODO(george): refresh stuff
+      Game.mapWindow.getMapInfo();
     }
   }
 

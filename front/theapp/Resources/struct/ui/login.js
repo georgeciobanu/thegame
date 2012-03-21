@@ -30,7 +30,7 @@
       value: 'liviu@lh.com',
       borderStyle: Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		  
 		}),
-		
+
 		passwordView = Ti.UI.createView({
 		  layout: 'horizontal',
 		  height: 50
@@ -44,7 +44,7 @@
       value: 'password',
       borderStyle: Titanium.UI.INPUT_BORDERSTYLE_ROUNDED
 		}),
-		
+
 		loginButton = Ti.UI.createButton({
 		  title: 'Play!',
 		  height: 30,

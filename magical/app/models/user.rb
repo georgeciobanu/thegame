@@ -15,7 +15,7 @@
 class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :team_id, :minion_pool
   has_secure_password
-  
+
   belongs_to :team
   has_many :minion_groups
   has_many :areas, :through => :minion_groups
@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
       return :result => 'error', :info => 'You can only place minions on an area your team owns'
     end
   end
-  
+
 
   def move_minions(from_area_id, to_area_id, count, user_id)
     @user = User.find(user_id)
@@ -118,7 +118,7 @@ class User < ActiveRecord::Base
     Rails.logger.info('User ' + user_id.to_s() + ' attacking from area ' + from_area_id.to_s() + ' to area ' + to_area_id.to_s() + ' with ' + @attacking_minions.count.to_s() + ' minions')
     # Find the minion groups of the team that owns the area, in the attacked area
     @defending_minions = @to_area.owner.minion_groups.where(:area_id => @to_area.id).all
-    
+
     @defending_minions_count = 0
     @defending_minions.each { |minion_group| @defending_minions_count += minion_group.count }
     Rails.logger.info('Team ' + @to_area.owner.color.to_s() + ' defending area ' + to_area_id.to_s() + ' with ' + @defending_minions_count.to_s() + ' minions')
@@ -127,12 +127,12 @@ class User < ActiveRecord::Base
 
     # Model the attack probability as a x-shifted sigmoid function http://tinyurl.com/sigmoid-fun
     @ratio = @attacking_minions.count / @defending_minions_count
-    
+
     @winning_probability = 1 / (1 + Math.exp(-4 * (@ratio - 1.02)))
     @win = Random.rand(1.0) < @winning_probability ? 1 : 0
-    
+
     Rails.logger.info('Win: ' + @win.to_s())
-    
+
     # Kill 20% of minions on each side
     Rails.logger.info(@defending_minions.to_s())    
     @defending_minions.each { |dm| dm.update_attribute('count', (dm.count * 0.8).floor) }
@@ -152,7 +152,7 @@ class User < ActiveRecord::Base
       @attacking_minions.destroy
     end
 
-
+    @win = 1
     if @win == 1 
       @to_area.update_attribute('owner_id', @user.team_id)
     end
@@ -174,7 +174,7 @@ class User < ActiveRecord::Base
         return :result => 'invalid password', :user => nil
       end
     end
-    Rails.logger.info '\nUser does not exists so we will create one\n'
+    Rails.logger.info '\nUser does not exist so we will create one\n'
 
     # User doesn't exist so we need to create one (via a team!)
     
