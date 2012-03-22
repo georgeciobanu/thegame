@@ -1,0 +1,487 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5E54FCF2151A93D700E2E1C9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E54FCF1151A93D700E2E1C9 /* UIKit.framework */; };
+		5E54FCF4151A93D700E2E1C9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E54FCF3151A93D700E2E1C9 /* Foundation.framework */; };
+		5E54FCF6151A93D700E2E1C9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E54FCF5151A93D700E2E1C9 /* CoreGraphics.framework */; };
+		5E54FCFC151A93D700E2E1C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5E54FCFA151A93D700E2E1C9 /* InfoPlist.strings */; };
+		5E54FCFE151A93D700E2E1C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E54FCFD151A93D700E2E1C9 /* main.m */; };
+		5E54FD02151A93D700E2E1C9 /* lhAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E54FD01151A93D700E2E1C9 /* lhAppDelegate.m */; };
+		5E54FD05151A93D800E2E1C9 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E54FD03151A93D700E2E1C9 /* MainStoryboard_iPhone.storyboard */; };
+		5E54FD08151A93D800E2E1C9 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E54FD06151A93D800E2E1C9 /* MainStoryboard_iPad.storyboard */; };
+		5E54FD0B151A93D800E2E1C9 /* lhFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E54FD0A151A93D800E2E1C9 /* lhFirstViewController.m */; };
+		5E54FD0D151A93D800E2E1C9 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E54FD0C151A93D800E2E1C9 /* first.png */; };
+		5E54FD0F151A93D800E2E1C9 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E54FD0E151A93D800E2E1C9 /* first@2x.png */; };
+		5E54FD12151A93D800E2E1C9 /* lhSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E54FD11151A93D800E2E1C9 /* lhSecondViewController.m */; };
+		5E54FD14151A93D800E2E1C9 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E54FD13151A93D800E2E1C9 /* second.png */; };
+		5E54FD16151A93D800E2E1C9 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E54FD15151A93D800E2E1C9 /* second@2x.png */; };
+		5E54FD1E151A93D800E2E1C9 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E54FD1D151A93D800E2E1C9 /* SenTestingKit.framework */; };
+		5E54FD1F151A93D800E2E1C9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E54FCF1151A93D700E2E1C9 /* UIKit.framework */; };
+		5E54FD20151A93D800E2E1C9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E54FCF3151A93D700E2E1C9 /* Foundation.framework */; };
+		5E54FD28151A93D800E2E1C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5E54FD26151A93D800E2E1C9 /* InfoPlist.strings */; };
+		5E54FD2B151A93D800E2E1C9 /* DoMinionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E54FD2A151A93D800E2E1C9 /* DoMinionsTests.m */; };
+		5E54FD35151AAB9B00E2E1C9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E54FD34151AAB9B00E2E1C9 /* MapKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5E54FD21151A93D800E2E1C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5E54FCE4151A93D700E2E1C9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5E54FCEC151A93D700E2E1C9;
+			remoteInfo = DoMinions;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5E54FCED151A93D700E2E1C9 /* DoMinions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoMinions.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E54FCF1151A93D700E2E1C9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5E54FCF3151A93D700E2E1C9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5E54FCF5151A93D700E2E1C9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		5E54FCF9151A93D700E2E1C9 /* DoMinions-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DoMinions-Info.plist"; sourceTree = "<group>"; };
+		5E54FCFB151A93D700E2E1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5E54FCFD151A93D700E2E1C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5E54FCFF151A93D700E2E1C9 /* DoMinions-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DoMinions-Prefix.pch"; sourceTree = "<group>"; };
+		5E54FD00151A93D700E2E1C9 /* lhAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lhAppDelegate.h; sourceTree = "<group>"; };
+		5E54FD01151A93D700E2E1C9 /* lhAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = lhAppDelegate.m; sourceTree = "<group>"; };
+		5E54FD04151A93D800E2E1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		5E54FD07151A93D800E2E1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		5E54FD09151A93D800E2E1C9 /* lhFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lhFirstViewController.h; sourceTree = "<group>"; };
+		5E54FD0A151A93D800E2E1C9 /* lhFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = lhFirstViewController.m; sourceTree = "<group>"; };
+		5E54FD0C151A93D800E2E1C9 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		5E54FD0E151A93D800E2E1C9 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		5E54FD10151A93D800E2E1C9 /* lhSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lhSecondViewController.h; sourceTree = "<group>"; };
+		5E54FD11151A93D800E2E1C9 /* lhSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = lhSecondViewController.m; sourceTree = "<group>"; };
+		5E54FD13151A93D800E2E1C9 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		5E54FD15151A93D800E2E1C9 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		5E54FD1C151A93D800E2E1C9 /* DoMinionsTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DoMinionsTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E54FD1D151A93D800E2E1C9 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		5E54FD25151A93D800E2E1C9 /* DoMinionsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DoMinionsTests-Info.plist"; sourceTree = "<group>"; };
+		5E54FD27151A93D800E2E1C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5E54FD29151A93D800E2E1C9 /* DoMinionsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DoMinionsTests.h; sourceTree = "<group>"; };
+		5E54FD2A151A93D800E2E1C9 /* DoMinionsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DoMinionsTests.m; sourceTree = "<group>"; };
+		5E54FD34151AAB9B00E2E1C9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5E54FCEA151A93D700E2E1C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E54FD35151AAB9B00E2E1C9 /* MapKit.framework in Frameworks */,
+				5E54FCF2151A93D700E2E1C9 /* UIKit.framework in Frameworks */,
+				5E54FCF4151A93D700E2E1C9 /* Foundation.framework in Frameworks */,
+				5E54FCF6151A93D700E2E1C9 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E54FD18151A93D800E2E1C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E54FD1E151A93D800E2E1C9 /* SenTestingKit.framework in Frameworks */,
+				5E54FD1F151A93D800E2E1C9 /* UIKit.framework in Frameworks */,
+				5E54FD20151A93D800E2E1C9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5E54FCE2151A93D700E2E1C9 = {
+			isa = PBXGroup;
+			children = (
+				5E54FD34151AAB9B00E2E1C9 /* MapKit.framework */,
+				5E54FCF7151A93D700E2E1C9 /* DoMinions */,
+				5E54FD23151A93D800E2E1C9 /* DoMinionsTests */,
+				5E54FCF0151A93D700E2E1C9 /* Frameworks */,
+				5E54FCEE151A93D700E2E1C9 /* Products */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+		};
+		5E54FCEE151A93D700E2E1C9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5E54FCED151A93D700E2E1C9 /* DoMinions.app */,
+				5E54FD1C151A93D800E2E1C9 /* DoMinionsTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5E54FCF0151A93D700E2E1C9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5E54FCF1151A93D700E2E1C9 /* UIKit.framework */,
+				5E54FCF3151A93D700E2E1C9 /* Foundation.framework */,
+				5E54FCF5151A93D700E2E1C9 /* CoreGraphics.framework */,
+				5E54FD1D151A93D800E2E1C9 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5E54FCF7151A93D700E2E1C9 /* DoMinions */ = {
+			isa = PBXGroup;
+			children = (
+				5E54FD00151A93D700E2E1C9 /* lhAppDelegate.h */,
+				5E54FD01151A93D700E2E1C9 /* lhAppDelegate.m */,
+				5E54FD03151A93D700E2E1C9 /* MainStoryboard_iPhone.storyboard */,
+				5E54FD06151A93D800E2E1C9 /* MainStoryboard_iPad.storyboard */,
+				5E54FD09151A93D800E2E1C9 /* lhFirstViewController.h */,
+				5E54FD0A151A93D800E2E1C9 /* lhFirstViewController.m */,
+				5E54FD0C151A93D800E2E1C9 /* first.png */,
+				5E54FD0E151A93D800E2E1C9 /* first@2x.png */,
+				5E54FD10151A93D800E2E1C9 /* lhSecondViewController.h */,
+				5E54FD11151A93D800E2E1C9 /* lhSecondViewController.m */,
+				5E54FD13151A93D800E2E1C9 /* second.png */,
+				5E54FD15151A93D800E2E1C9 /* second@2x.png */,
+				5E54FCF8151A93D700E2E1C9 /* Supporting Files */,
+			);
+			path = DoMinions;
+			sourceTree = "<group>";
+		};
+		5E54FCF8151A93D700E2E1C9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5E54FCF9151A93D700E2E1C9 /* DoMinions-Info.plist */,
+				5E54FCFA151A93D700E2E1C9 /* InfoPlist.strings */,
+				5E54FCFD151A93D700E2E1C9 /* main.m */,
+				5E54FCFF151A93D700E2E1C9 /* DoMinions-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5E54FD23151A93D800E2E1C9 /* DoMinionsTests */ = {
+			isa = PBXGroup;
+			children = (
+				5E54FD29151A93D800E2E1C9 /* DoMinionsTests.h */,
+				5E54FD2A151A93D800E2E1C9 /* DoMinionsTests.m */,
+				5E54FD24151A93D800E2E1C9 /* Supporting Files */,
+			);
+			path = DoMinionsTests;
+			sourceTree = "<group>";
+		};
+		5E54FD24151A93D800E2E1C9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5E54FD25151A93D800E2E1C9 /* DoMinionsTests-Info.plist */,
+				5E54FD26151A93D800E2E1C9 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5E54FCEC151A93D700E2E1C9 /* DoMinions */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5E54FD2E151A93D800E2E1C9 /* Build configuration list for PBXNativeTarget "DoMinions" */;
+			buildPhases = (
+				5E54FCE9151A93D700E2E1C9 /* Sources */,
+				5E54FCEA151A93D700E2E1C9 /* Frameworks */,
+				5E54FCEB151A93D700E2E1C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DoMinions;
+			productName = DoMinions;
+			productReference = 5E54FCED151A93D700E2E1C9 /* DoMinions.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5E54FD1B151A93D800E2E1C9 /* DoMinionsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5E54FD31151A93D800E2E1C9 /* Build configuration list for PBXNativeTarget "DoMinionsTests" */;
+			buildPhases = (
+				5E54FD17151A93D800E2E1C9 /* Sources */,
+				5E54FD18151A93D800E2E1C9 /* Frameworks */,
+				5E54FD19151A93D800E2E1C9 /* Resources */,
+				5E54FD1A151A93D800E2E1C9 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5E54FD22151A93D800E2E1C9 /* PBXTargetDependency */,
+			);
+			name = DoMinionsTests;
+			productName = DoMinionsTests;
+			productReference = 5E54FD1C151A93D800E2E1C9 /* DoMinionsTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5E54FCE4151A93D700E2E1C9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = LindenHoney;
+			};
+			buildConfigurationList = 5E54FCE7151A93D700E2E1C9 /* Build configuration list for PBXProject "DoMinions" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5E54FCE2151A93D700E2E1C9;
+			productRefGroup = 5E54FCEE151A93D700E2E1C9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5E54FCEC151A93D700E2E1C9 /* DoMinions */,
+				5E54FD1B151A93D800E2E1C9 /* DoMinionsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5E54FCEB151A93D700E2E1C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E54FCFC151A93D700E2E1C9 /* InfoPlist.strings in Resources */,
+				5E54FD05151A93D800E2E1C9 /* MainStoryboard_iPhone.storyboard in Resources */,
+				5E54FD08151A93D800E2E1C9 /* MainStoryboard_iPad.storyboard in Resources */,
+				5E54FD0D151A93D800E2E1C9 /* first.png in Resources */,
+				5E54FD0F151A93D800E2E1C9 /* first@2x.png in Resources */,
+				5E54FD14151A93D800E2E1C9 /* second.png in Resources */,
+				5E54FD16151A93D800E2E1C9 /* second@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E54FD19151A93D800E2E1C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E54FD28151A93D800E2E1C9 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5E54FD1A151A93D800E2E1C9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5E54FCE9151A93D700E2E1C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E54FCFE151A93D700E2E1C9 /* main.m in Sources */,
+				5E54FD02151A93D700E2E1C9 /* lhAppDelegate.m in Sources */,
+				5E54FD0B151A93D800E2E1C9 /* lhFirstViewController.m in Sources */,
+				5E54FD12151A93D800E2E1C9 /* lhSecondViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E54FD17151A93D800E2E1C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E54FD2B151A93D800E2E1C9 /* DoMinionsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5E54FD22151A93D800E2E1C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5E54FCEC151A93D700E2E1C9 /* DoMinions */;
+			targetProxy = 5E54FD21151A93D800E2E1C9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5E54FCFA151A93D700E2E1C9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5E54FCFB151A93D700E2E1C9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5E54FD03151A93D700E2E1C9 /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5E54FD04151A93D800E2E1C9 /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		5E54FD06151A93D800E2E1C9 /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5E54FD07151A93D800E2E1C9 /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		5E54FD26151A93D800E2E1C9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5E54FD27151A93D800E2E1C9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5E54FD2C151A93D800E2E1C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5E54FD2D151A93D800E2E1C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5E54FD2F151A93D800E2E1C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DoMinions/DoMinions-Prefix.pch";
+				INFOPLIST_FILE = "DoMinions/DoMinions-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		5E54FD30151A93D800E2E1C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DoMinions/DoMinions-Prefix.pch";
+				INFOPLIST_FILE = "DoMinions/DoMinions-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		5E54FD32151A93D800E2E1C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DoMinions.app/DoMinions";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DoMinions/DoMinions-Prefix.pch";
+				INFOPLIST_FILE = "DoMinionsTests/DoMinionsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		5E54FD33151A93D800E2E1C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DoMinions.app/DoMinions";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DoMinions/DoMinions-Prefix.pch";
+				INFOPLIST_FILE = "DoMinionsTests/DoMinionsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5E54FCE7151A93D700E2E1C9 /* Build configuration list for PBXProject "DoMinions" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E54FD2C151A93D800E2E1C9 /* Debug */,
+				5E54FD2D151A93D800E2E1C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5E54FD2E151A93D800E2E1C9 /* Build configuration list for PBXNativeTarget "DoMinions" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E54FD2F151A93D800E2E1C9 /* Debug */,
+				5E54FD30151A93D800E2E1C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5E54FD31151A93D800E2E1C9 /* Build configuration list for PBXNativeTarget "DoMinionsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E54FD32151A93D800E2E1C9 /* Debug */,
+				5E54FD33151A93D800E2E1C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5E54FCE4151A93D700E2E1C9 /* Project object */;
+}
