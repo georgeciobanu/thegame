@@ -1,5 +1,7 @@
 Magical::Application.routes.draw do
   
+  resources :posts
+
   resources :users, :except => [:destroy, :update, :edit, :show, :new, :index] do
     member do
       get 'info'
