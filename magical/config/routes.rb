@@ -14,6 +14,7 @@ Magical::Application.routes.draw do
   # only using :index
   resources :areas, :except => [:destroy, :update, :edit, :show, :new, :create]
   resources :teams, :except => [:destroy, :update, :edit, :show, :new, :create]
+  resources :games
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
