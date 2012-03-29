@@ -1,0 +1,31 @@
+body {
+	width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #FAFAFA;
+}
+
+h1 {
+	text-align: center;
+	font-family: verdana;
+	text-shadow: 1px 2px 2px #2E2E2B;
+}
+
+p,form {
+	text-align: center;
+	color: #626262;
+	line-height: 120%;
+}
+
+#content {
+	margin-top: 40%;
+	margin-bottom: 100px;
+	display: block;
+	color: #797979;
+}
+
+img {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}

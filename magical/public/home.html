@@ -1,9 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="style.css" type="text/css" />
     <title>LindenHoney</title>
   </head>
   <body>
-            <h3>Jonathan - Feel free to modify this however you wish</h3>
+	<div id="content">
+	<p>	<img src="images/logo.png" alt="LindenHoney" height="137" width="200" title="LindenHoney" />
+    </p>
+	<h1>LindenHoney</h1>
+	<p>
+		The adventure is soon to begin... <br />
+	</p>
+	<p>
+		On a computer or phone near you.
+	</p> 
+	<br />
+	<form>
+		<label for="email">Email:</label>
+		<input type="text" id="email" /> <br />
+		<button type="button" onClick="submitEmail(this.form)">Sign up for email updates</button>
+	</form>
+	<p id="msg"></p>
   </body>
+<script type="text/javascript" src="scripts.js"></script>
 </html>
