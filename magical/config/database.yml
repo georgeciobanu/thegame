@@ -14,5 +14,6 @@ production:
   adapter: mysql
   database: library_production
   username: root
-  password: zEetzhxY1UmqIjmWBx6R
-  host: mysql://root:zEetzhxY1UmqIjmWBx6R@thegame-georgeciobanu.dotcloud.com:23306
+  password: jB33ExlMj828uyAODqlb
+  port: 23306
+  host: thegame-georgeciobanu.dotcloud.com
