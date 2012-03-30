@@ -9,6 +9,10 @@
 #  game_map_id :integer(4)
 #  owner_id    :integer(4)
 #  color       :string(255)
+#  x           :integer(4)
+#  y           :integer(4)
+#  width       :integer(4)
+#  height      :integer(4)
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null
 #
