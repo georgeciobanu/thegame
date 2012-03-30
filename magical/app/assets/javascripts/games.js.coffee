@@ -2,46 +2,51 @@ jQuery ->
   url = '/users/1/info'
   
   info = {}
+  my_minion_groups = {}
+  previous_area_id = -1
 
   processInfoResponse = (data, textStatus, jqXHR) ->
     console.log(data)
     info = data
+    my_minion_groups = data.my_minion_groups
     renderArea(area) for area in data.areas
     addAreaListeners(area) for area in data.areas
-    
+
   renderArea = (area) ->
     console.log('area_' + area.id.toString())
     $('#GameMap').append("
       <div id=\'area_#{ area.id }\'
-      style=\"position: absolute; top: #{area.y}px; left: #{area.x}px; width: #{area.width}px; height: #{area.height}px; background-color: blue;\"
+      style=\"position: absolute; top: #{area.y}px; left: #{area.x}px; 
+      width: #{area.width}px; height: #{area.height}px; background-color: blue;\"
       onmouseover=\"this.style.backgroundColor=\'red\'\" onmouseout=\"this.style.backgroundColor=\'blue\'\" 
       onclick=\"this.style.backgroundColor=\'green\'\">
       <p> Area #{ area.id }</p>
       </div>")
-    $('#area_1').data('area_id', area.id)
+    $("#area_#{ area.id }").data('area_id', area.id)
     
   
   addAreaListeners = (area) ->
     $("#area_#{ area.id}").click ->
-      console.log(@)
-      alert('Russell is in the house!')
-      console.log($("#area_1").data('area_id'))
-      
-      # switch @data-area_id {
-      #   // This is the first click on an area -> select it
-      #   case -1:
-      #     minion_group_on_area = null;
-      #     minion_group_on_area = _.find(Game.db.user.minion_groups, 
-      #                                   function (minion_group) {
-      #                                     return minion_group.area_id === evt.source.area_id;
-      #                                   });
-      #     Ti.API.info(minion_group_on_area);
-      # 
-      #     if (minion_group_on_area == null) {
-      #       Ti.API.info('Clicked an area where you don\'t have minions, exiting');
-      #       Ti.API.info('Selected should be -1: ' + Game.ui.selected_id);          
-      #       return;
-      #     }
+      # console.log $(@).data('area_id')      
+      area_id = $(@).data('area_id')
+      console.log area_id
+
+      switch previous_area_id
+      # This is the first click on an area -> select it
+        when -1
+          # (name for name in list when name.length < 5)
+          minion_group_on_area = (mg for mg in my_minion_groups when mg.area_id == area_id)[0]
+          console.log(minion_group_on_area)
+          if minion_group_on_area? then console.log('you have MG here') else console.log('no MG here')
+        else console.log('else')
+          
+          # Ti.API.info(minion_group_on_area);
+          #     
+          # if (minion_group_on_area == null) {
+          #   Ti.API.info('Clicked an area where you don\'t have minions, exiting');
+          #   Ti.API.info('Selected should be -1: ' + Game.ui.selected_id);          
+          #   return;
+          # }
       # 
       #     Ti.API.info('First click on area where you have minions');        
       #     Game.ui.selected_id = evt.source.area_id;
