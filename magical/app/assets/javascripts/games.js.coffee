@@ -1,5 +1,5 @@
 jQuery ->
-  url = 'http://localhost:3000/users/1/info'
+  url = '/users/1/info'
   
   info = {}
 
