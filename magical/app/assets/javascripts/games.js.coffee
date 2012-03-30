@@ -32,7 +32,7 @@ jQuery ->
       <div id=\'area_#{ area.id }\'
       style=\"position: absolute; top: #{area.y}px; left: #{area.x}px; 
       width: #{area.width}px; height: #{area.height}px; background-color: #{ teams[area.owner_id].color };\"
-      onmouseover=\"this.style.backgroundColor=\'red\'\" onmouseout=\"this.style.backgroundColor=\'blue\'\" 
+      onmouseover=\"this.style.backgroundColor=\'orange\'\" onmouseout=\"this.style.backgroundColor=\'#{ teams[area.owner_id].color }\'\" 
       onclick=\"this.style.backgroundColor=\'green\'\">
       <p> Area #{ area.id }</p>
       </div>")
