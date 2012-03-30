@@ -1,17 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<div id='game_map'>
+<div id='game_map_text'>
   <p>Do something!</p>
 </div>
 
 <div id="GameMap" style="position: relative;"><img src="/assets/campus.png" alt="Some text"/>
-    <div id="Area1" style="position: absolute; top: 100px; left: 50px; width: 240px; height: 150px; background-color: blue;"
-        onmouseover="this.style.backgroundColor='red'" onmouseout="this.style.backgroundColor='blue'" 
-        onclick="this.style.backgroundColor='green'">
-        <p> Area 1</p>
-    </div>
 </div>
-
-
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
