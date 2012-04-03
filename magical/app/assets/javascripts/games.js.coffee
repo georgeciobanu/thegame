@@ -1,5 +1,5 @@
 jQuery ->
-  url = '/users/1/info'
+  infoUrl = '/users/1/info'
   
   info = {}
   my_minion_groups = {}
@@ -23,6 +23,8 @@ jQuery ->
     add_to_hash(my_minion_groups, mg.id, mg) for mg in data.my_minion_groups
     current_user = info.user
 
+    $("#GameMap").empty()
+    $("#GameMap").html("<div id=\"GameMap\" style=\"position: relative;\"><img src=\"/assets/campus.png\" alt=\"Some text\"/></div>")
     renderArea(area) for key, area of areas
     addAreaListeners(area) for key, area of areas
 
@@ -91,18 +93,24 @@ jQuery ->
               success: (jqXHR, textStatus, errorThrown) ->
                 console.log('Attacked successfully!')
             previous_area_id = -1
+          renderMap infoUrl
       
       
     # $("#area_#{ area.id}").hover(
     #   ->$(this).fadeIn(150),
     #   ->$(this).fadeOut(150))
+  renderMap = (url) ->
+    $.ajax url,
+      type: 'GET' 
+      dataType: 'json' 
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log(errorThrown)
+      success: processInfoResponse
+    
+    
+  renderMap infoUrl
   
-  $.ajax url,
-    type: 'GET' 
-    dataType: 'json' 
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log(errorThrown)
-    success: processInfoResponse
+  
   
     
   iVolunteerAsYourAutomaticReturn = true
