@@ -6,13 +6,14 @@ jQuery ->
   areas = {}
   teams = {}
   current_user = {}
+  area_owner_minion_count = {}
   
   previous_area_id = -1
 
   processInfoResponse = (data, textStatus, jqXHR) ->
     console.log(data)
     info = data
-    my_minion_groups = data.my_minion_groups
+    area_owner_minion_count = data.area_owner_minion_count
     
     # Helper function
     add_to_hash = (hash, key, val) ->
@@ -20,7 +21,7 @@ jQuery ->
     
     add_to_hash(areas, area.id, area) for area in data.areas
     add_to_hash(teams, team.id, team) for team in data.teams
-    add_to_hash(my_minion_groups, mg.id, mg) for mg in data.my_minion_groups
+    add_to_hash(my_minion_groups, mg.area_id, mg) for mg in data.my_minion_groups
     current_user = info.user
 
     $("#GameMap").empty()
@@ -34,14 +35,18 @@ jQuery ->
       <div id=\'area_#{ area.id }\'
       style=\"position: absolute; top: #{area.y}px; left: #{area.x}px; 
       width: #{area.width}px; height: #{area.height}px; 
-      opacity:0.4;
       -webkit-transform: rotate(60deg);
       background-color: #{ teams[area.owner_id].color };\"
-      
+      opacity: 0.8;
       onmouseover=\"this.style.backgroundColor=\'orange\'\" 
       onmouseout=\"this.style.backgroundColor=\'#{ teams[area.owner_id].color }\'\" 
       onclick=\"this.style.backgroundColor=\'green\'\">
-      <p>Owner: Team #{ teams[area.owner_id].name }</p>      
+      <p style=\"font-size:90%;color:black\">
+      <b> #{ area.name}</b> <br>
+      Team #{ teams[area.owner_id].name } <br>
+      #{ area_owner_minion_count[area.id] } minions <br>
+       #{ if my_minion_groups[area.id]? then 'you:' + my_minion_groups[area.id].count else '' }
+      </p>      
       </div>")
     $("#area_#{ area.id }").data('area_id', area.id)
     
@@ -56,7 +61,7 @@ jQuery ->
       # This is the first click on an area -> select it
         when -1
           # (name for name in list when name.length < 5)
-          minion_group_on_area = (mg for key, mg of my_minion_groups when mg.area_id == area_id)[0]
+          minion_group_on_area = my_minion_groups[area_id]
           if minion_group_on_area?
             console.log('-1 : you have MG here') 
             console.log(minion_group_on_area)

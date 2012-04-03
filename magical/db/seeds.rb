@@ -8,10 +8,10 @@
 game = Game.create({ name: 'University of Colorado at Boulder' })
 gm = game.create_game_map(name: 'the one')
 
-areas = gm.areas.create([{ name: 'Sports', lat: 33.74011, long: -84.37093, owner_id: 2, x: 180, y: 260, width: 80, height: 80 }, 
-                         { name: 'Arts', lat: 33.75111, long: -84.37093, owner_id: 3, x: 360, y: 350, width: 80, height: 80 },
-                         { name: 'Science', lat: 33.75111, long: -84.39593, owner_id: 1, x: 260, y: 420, width: 80, height: 80 },
-                         { name: 'Engineering', lat: 33.74011, long: -84.39593, owner_id: 3, x: 280, y: 200, width: 80, height: 80 } ])
+areas = gm.areas.create([{ name: 'Sports', lat: 33.74011, long: -84.37093, owner_id: 2, x: 180, y: 260, width: 100, height: 100 }, 
+                         { name: 'Arts', lat: 33.75111, long: -84.37093, owner_id: 3, x: 360, y: 340, width: 100, height: 100 },
+                         { name: 'Science', lat: 33.75111, long: -84.39593, owner_id: 1, x: 260, y: 400, width: 100, height: 100 },
+                         { name: 'Engineering', lat: 33.74011, long: -84.39593, owner_id: 3, x: 280, y: 190, width: 100, height: 100 } ])
 
 teams = gm.teams.create([{ name: 'Green', color: 'green' }, { name: 'Blue', color: 'blue' }, { name: 'Red', color: 'red' }])
 
