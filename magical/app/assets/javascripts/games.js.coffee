@@ -33,10 +33,15 @@ jQuery ->
     $('#GameMap').append("
       <div id=\'area_#{ area.id }\'
       style=\"position: absolute; top: #{area.y}px; left: #{area.x}px; 
-      width: #{area.width}px; height: #{area.height}px; background-color: #{ teams[area.owner_id].color };\"
-      onmouseover=\"this.style.backgroundColor=\'orange\'\" onmouseout=\"this.style.backgroundColor=\'#{ teams[area.owner_id].color }\'\" 
+      width: #{area.width}px; height: #{area.height}px; 
+      opacity:0.4;
+      -webkit-transform: rotate(60deg);
+      background-color: #{ teams[area.owner_id].color };\"
+      
+      onmouseover=\"this.style.backgroundColor=\'orange\'\" 
+      onmouseout=\"this.style.backgroundColor=\'#{ teams[area.owner_id].color }\'\" 
       onclick=\"this.style.backgroundColor=\'green\'\">
-      <p> Area #{ area.id }</p>
+      <p>Owner: Team #{ teams[area.owner_id].name }</p>      
       </div>")
     $("#area_#{ area.id }").data('area_id', area.id)
     
