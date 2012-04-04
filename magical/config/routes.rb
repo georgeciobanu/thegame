@@ -1,5 +1,7 @@
 Magical::Application.routes.draw do
   
+  resources :email_updates
+
   resources :emails
 
   resources :emails, :except => [:destroy, :update, :edit, :show]

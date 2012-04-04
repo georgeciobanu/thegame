@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120330203409) do
+ActiveRecord::Schema.define(:version => 20120404165623) do
 
   create_table "areas", :force => true do |t|
     t.string   "name"
@@ -26,6 +26,14 @@ ActiveRecord::Schema.define(:version => 20120330203409) do
     t.integer  "height"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "email_updates", :force => true do |t|
+    t.string   "subject"
+    t.string   "message"
+    t.date     "date_sent"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "emails", :force => true do |t|
@@ -72,6 +80,14 @@ ActiveRecord::Schema.define(:version => 20120330203409) do
   end
 
   add_index "teams", ["name"], :name => "index_teams_on_name", :unique => true
+
+  create_table "user_email_messages", :force => true do |t|
+    t.string   "message"
+    t.string   "subject"
+    t.date     "dateSent"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

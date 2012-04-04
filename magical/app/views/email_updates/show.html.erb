@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Subject:</b>
+  <%= @email_update.subject %>
+</p>
+
+<p>
+  <b>Message:</b>
+  <%= @email_update.message %>
+</p>
+
+<p>
+  <b>Date sent:</b>
+  <%= @email_update.date_sent %>
+</p>
+
+
+<%= link_to 'Back', email_updates_path %>

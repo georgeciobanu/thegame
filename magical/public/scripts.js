@@ -9,6 +9,7 @@ function isValidEmailAddress(emailAddress) {
 
 function submitEmail() {
 	var email = document.getElementById('email').value;
+	document.getElementById('msg').innerHTML = 'Processing...';		 	
 	if(email == '' || !isValidEmailAddress(email))
 		document.getElementById('msg').innerHTML = "'" + email + "': is not a valid Email address";		 	
 	else
