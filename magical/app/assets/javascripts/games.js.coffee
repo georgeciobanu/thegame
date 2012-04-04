@@ -103,7 +103,7 @@ jQuery ->
               success: (jqXHR, textStatus, errorThrown) ->
                 console.log('Attacked successfully!')
             previous_area_id = -1
-          renderMap infoUrl
+          # renderMap infoUrl
       
       
     # $("#area_#{ area.id}").hover(

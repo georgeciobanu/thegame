@@ -128,8 +128,8 @@ class User < ActiveRecord::Base
     # else
     @minion_group_on_area = User.find(user_id).minion_groups.find_by_area_id(from_area_id)
     
-      Delayed::Job.enqueue(AttackJob.new(from_area_id, to_area_id, user_id, @minion_group_on_area), 0, 
-                            3.seconds.from_now)
+      Delayed::Job.enqueue( AttackJob.new(from_area_id, to_area_id, user_id, @minion_group_on_area), 
+                          :priority => 0,  :run_at => 3.seconds.from_now)
     # end
   end
 
