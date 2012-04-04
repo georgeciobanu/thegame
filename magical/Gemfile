@@ -9,6 +9,8 @@ gem 'rails', '3.2.1'
 gem 'mysql'
 gem 'bcrypt-ruby', '3.0.1'
 
+gem 'delayed_job'
+gem 'delayed_job_active_record'
 
 group :development do
   gem 'annotate', '2.4.1.beta1'

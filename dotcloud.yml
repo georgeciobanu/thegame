@@ -4,3 +4,7 @@ db:
 rails:
   approot: magical
   type: ruby
+
+worker:
+  type: ruby-worker
+  approot: ruby_worker
