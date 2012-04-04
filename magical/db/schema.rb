@@ -28,6 +28,14 @@ ActiveRecord::Schema.define(:version => 20120404023933) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "email_updates", :force => true do |t|
+    t.string   "subject"
+    t.string   "message"
+    t.date     "date_sent"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
     t.integer  "attempts",   :default => 0
@@ -88,6 +96,14 @@ ActiveRecord::Schema.define(:version => 20120404023933) do
   end
 
   add_index "teams", ["name"], :name => "index_teams_on_name", :unique => true
+
+  create_table "user_email_messages", :force => true do |t|
+    t.string   "message"
+    t.string   "subject"
+    t.date     "dateSent"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"
