@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+ENV['RAILS_ENV'] ||= 'production'
 require File.dirname(__FILE__) + '/config/environment'
-Rails.logger('Loaded the environment')
+Rails.logger.info('Loaded the environment')
 
 # Callback called when you run `supervisorctl stop'
 def sigterm_handler
@@ -10,7 +11,7 @@ end
 
 
 def main
-  Rails.logger('About to start the worker')  
+  Rails.logger.info('About to start the worker')  
   Delayed::Worker.new.start
   # The code below can help with debuggin
   # while true do
