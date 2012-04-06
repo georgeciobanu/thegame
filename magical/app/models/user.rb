@@ -116,7 +116,7 @@ class User < ActiveRecord::Base
   # Attack an area using minions from any one neighboring areas
   # Attack all of the defending minion groups
   # Remove any minion groups that have been completely decimated
-  def attack(from_area_id, to_area_id, user_id, attack_delay)
+  def attack_area(from_area_id, to_area_id, user_id, attack_delay)
     valid_attack, errorMessage = valid_attack (from_area_id, to_area_id, user_id)
     if not valid_attack
       return 'error', errorMessage
