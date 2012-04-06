@@ -89,8 +89,8 @@ class User < ActiveRecord::Base
     # TODO(george): This check needs to be done more thoroughly, somewhere else
     @minion_group_on_area = @user.minion_groups.find_by_area_id(from_area_id)
     if @minion_group_on_area  && @minion_group_on_area == 0
-      alert('Man, there is an empty minion group. See console.');
       Rails.logger.info(@minion_group_on_area);
+      return false, 'there is an empty minion_group'
       # Maybe we should also add the passive groups on the attacked area
     end
     
@@ -100,84 +100,89 @@ class User < ActiveRecord::Base
     # If from area is owned by my team and I have minions on it
     # If to area is not owned by my team
     @from_area_valid = @from_area && 
-                       # @from_area.owner == @user.team && 
                        @user.minion_groups.find_by_area_id(from_area_id)
 
     if not @from_area_valid
-      return 'error', 'You need to attack from an area that you have minions on'
+      return false, 'You need to attack from an area that you have minions on'
     end
     
     @to_area_valid = @to_area && @to_area.owner != @user.team
     if not @to_area_valid
-      return 'error', 'You can only attack an area that does not belong to your team'
+      return false, 'You can only attack an area that does not belong to your team'
     end
+    return true
   end
-    
+
   # Attack an area using minions from any one neighboring areas
   # Attack all of the defending minion groups
   # Remove any minion groups that have been completely decimated
   def attack(from_area_id, to_area_id, user_id, attack_delay)
-    # if not valid_attack(from_area_id, to_area_id, user_id)
-    #   return 'error', 'this is not a valid attack (and needs to be refactored)'
-    # end
-    
-    # attack_delay is guaranteed by the client to be in seconds
-    # TODO(george): Ensure delay is never greater than some value?
-    # if attack_delay == 0
-    #   execute_attack(from_area_id, to_area_id, user_id, attack_delay)
-    # else
+    valid_attack, errorMessage = valid_attack (from_area_id, to_area_id, user_id)
+    if not valid_attack
+      return 'error', errorMessage
+    end
+
+    attack_delay = 5 # testing
     @minion_group_on_area = User.find(user_id).minion_groups.find_by_area_id(from_area_id)
-    
-      Delayed::Job.enqueue( AttackJob.new(from_area_id, to_area_id, user_id, @minion_group_on_area), 
-                          :priority => 0,  :run_at => 3.seconds.from_now)
-    # end
+    # attack_delay should be guaranteed by the client to be in seconds
+    # TODO(george): Ensure delay is never greater than some value?
+    if attack_delay == 0
+      execute_attack(from_area_id, to_area_id, user_id, attack_delay, @minion_group_on_area.id)
+    else
+      Delayed::Job.enqueue( AttackJob.new(from_area_id, to_area_id, user_id, attack_delay, @minion_group_on_area.id),
+                          :priority => 0,  :run_at => attack_delay.seconds.from_now)
+    end
   end
 
-  def execute_attack(from_area_id, to_area_id, user_id, minion_group_id)
+  def execute_attack(from_area_id, to_area_id, user_id, attack_delay, minion_group_id)
     Rails.logger.info('Executing attack!')
-    # @attacking_minions = @from_area.minion_groups.find_by_user_id(user_id)
-    # Rails.logger.info('User ' + user_id.to_s() + ' attacking from area ' + from_area_id.to_s() + ' to area ' + to_area_id.to_s() + ' with ' + @attacking_minions.count.to_s() + ' minions')
-    # # Find the minion groups of the team that owns the area, in the attacked area
-    # @defending_minions = @to_area.owner.minion_groups.where(:area_id => @to_area.id).all
-    # 
-    # @defending_minions_count = 0
-    # @defending_minions.each { |minion_group| @defending_minions_count += minion_group.count }
-    # Rails.logger.info('Team ' + @to_area.owner.color.to_s() + ' defending area ' + to_area_id.to_s() + ' with ' + @defending_minions_count.to_s() + ' minions')
-    # Rails.logger.info('Team ' + @to_area.owner.color.to_s() + ' defended by minion groups:')
-    # Rails.logger.info(@defending_minions.to_s())
-    # 
-    # # Model the attack probability as an x-shifted sigmoid function http://tinyurl.com/sigmoid-fun
-    # @ratio = @attacking_minions.count / @defending_minions_count
-    # 
-    # @winning_probability = 1 / (1 + Math.exp(-4 * (@ratio - 1.02)))
-    # @win = Random.rand(1.0) < @winning_probability ? 1 : 0
-    # 
-    # Rails.logger.info('Win: ' + @win.to_s())
-    # 
-    # # Kill 20% of minions on each side
-    # Rails.logger.info(@defending_minions.to_s())    
-    # @defending_minions.each { |dm| dm.update_attribute('count', (dm.count * 0.8).floor) }
-    # Rails.logger.info('Team ' + @to_area.owner.color.to_s() + ' minion groups after attack:')
-    # Rails.logger.info(@defending_minions)    
-    # @defending_minions.each do |dm| 
-    #   if dm.count == 0
-    #     dm.destroy
-    #   end
-    # end
-    # 
-    # # TODO(george): We should ensure that some attacking minions always survive - some to stay behind, and some to take over the new area
-    # @attacking_minions.update_attribute('count', (@attacking_minions.count * 0.8).floor)
-    # Rails.logger.info('Player ' + user_id.to_s() + ' minion groups after attack:')
-    # Rails.logger.info(@attacking_minions.count.to_s())
-    # if @attacking_minions.count == 0
-    #   @attacking_minions.destroy
-    # end
-    # 
+    @from_area = Area.find(from_area_id)
+    @to_area = Area.find(to_area_id)
+    @user = User.find(user_id)
+
+    @attacking_minions = @from_area.minion_groups.find_by_user_id(user_id)
+    Rails.logger.info('User ' + user_id.to_s() + ' attacking from area ' + from_area_id.to_s() + ' to area ' + to_area_id.to_s() + ' with ' + @attacking_minions.count.to_s() + ' minions')
+    # Find the minion groups of the team that owns the area, in the attacked area
+    @defending_minions = @to_area.owner.minion_groups.where(:area_id => @to_area.id).all
+    
+    @defending_minions_count = 0
+    @defending_minions.each { |minion_group| @defending_minions_count += minion_group.count }
+    Rails.logger.info('Team ' + @to_area.owner.color.to_s() + ' defending area ' + to_area_id.to_s() + ' with ' + @defending_minions_count.to_s() + ' minions')
+    Rails.logger.info('Team ' + @to_area.owner.color.to_s() + ' defended by minion groups:')
+    Rails.logger.info(@defending_minions.to_s())
+    
+    # Model the attack probability as an x-shifted sigmoid function http://tinyurl.com/sigmoid-fun
+    @ratio = @attacking_minions.count / @defending_minions_count
+    
+    @winning_probability = 1 / (1 + Math.exp(-4 * (@ratio - 1.02)))
+    @win = Random.rand(1.0) < @winning_probability ? 1 : 0
+    
+    Rails.logger.info('Win: ' + @win.to_s())
+    
+    # Kill 20% of minions on each side
+    Rails.logger.info(@defending_minions.to_s())    
+    @defending_minions.each { |dm| dm.update_attribute('count', (dm.count * 0.8).floor) }
+    Rails.logger.info('Team ' + @to_area.owner.color.to_s() + ' minion groups after attack:')
+    Rails.logger.info(@defending_minions)    
+    @defending_minions.each do |dm| 
+      if dm.count == 0
+        dm.destroy
+      end
+    end
+
+    # TODO(george): We should ensure that some attacking minions always survive - some to stay behind, and some to take over the new area
+    @attacking_minions.update_attribute('count', (@attacking_minions.count * 0.8).floor)
+    Rails.logger.info('Player ' + user_id.to_s() + ' minion groups after attack:')
+    Rails.logger.info(@attacking_minions.count.to_s())
+    if @attacking_minions.count == 0
+      @attacking_minions.destroy
+    end
+    
     @win = 1
-    # if @win == 1 
-    #   @to_area.update_attribute('owner_id', @user.team_id)
-    # end
-    # Rails.logger.info('Attacked area now belongs to team: ' + @to_area.owner.color)
+    if @win == 1 
+      @to_area.update_attribute('owner_id', @user.team_id)
+    end
+    Rails.logger.info('Attacked area now belongs to team: ' + @to_area.owner.color)
     
     return :won => @win
   end

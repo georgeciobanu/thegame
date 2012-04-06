@@ -50,9 +50,18 @@ end
 
 It's a hacky way to monitor but it works.
 
+The other thing you can do is:
+-dotcloud ssh thegame.db (the mysql instance)
+-mysql -u root
+-use library_production;
+-select * from delayed_jobs;
+
+The number of entries should increase by one after you initiate a delayed attack. It should go down once the time has elapsed (use a delay of 5s or so).
+
 TODO: Automatically start the service after deployment using a postInstall script
 NOTE: Since the two apps share the same folder, make sure to only start it for the worker instance
 See http://docs.dotcloud.com/guides/environment/
+DotCloud weirdness: supervisord -n doesn't respect the -n, you need to run supervisord.real -n.
 
 It should be possible to run them from different folders but I am sick of this particular task (for now).
 

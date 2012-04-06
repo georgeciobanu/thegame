@@ -97,13 +97,14 @@ jQuery ->
             $.ajax '/users/' + current_user.id + '/attack',
               type: 'PUT'
               dataType: 'json'
-              data:  {from_area_id: previous_area_id, to_area_id: area_id}
+              data:  {from_area_id: previous_area_id, to_area_id: area_id, delay: 3}
               error: (jqXHR, textStatus, errorThrown) ->
                 console.log('Attack failed because: ' + textStatus + errorThrown)
               success: (jqXHR, textStatus, errorThrown) ->
                 console.log('Attacked successfully!')
             previous_area_id = -1
-          # renderMap infoUrl
+          # TODO: trigger sever-side updates or periodic refreshing
+          renderMap infoUrl
       
       
     # $("#area_#{ area.id}").hover(
