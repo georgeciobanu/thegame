@@ -11,7 +11,7 @@ Magical::Application.routes.draw do
   resources :users, :except => [:destroy, :update, :edit, :show, :new, :index] do
     member do
       get 'info'
-      put 'attack'
+      put 'attack_area'
       put 'place_minions'
       put 'move_minions'
     end

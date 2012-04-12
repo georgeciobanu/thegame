@@ -6,5 +6,5 @@ rails:
   type: ruby
 
 worker:
+  approot: magical
   type: ruby-worker
-  approot: ruby_worker

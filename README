@@ -19,3 +19,50 @@ Then go to the 'magical' folder and run
 bundle install to install everything needed for Rails
 
 For the frontend, install the latest version of XCode and then the iOS SDK. Latest should be fine.
+
+
+
+Documentation on the stack
+
+Scheduler 
+The scheduler that allows us to delay attacks uses a Ruby worker.
+It is configured using two files: 
+-supervisord.conf and
+-worker.rb
+
+When you run supervisord it looks for the .conf file in the current dir and starts and monitors a daemon with the instructions in the 'program' section.
+
+The worker.rb script loads the Rails environment (it uses the same Gemfile) and then starts a scheduler instance.
+
+The scheduler periodically checks the DB (jobs are stored in the db) and if any jobs need to be executed it does so and then deletes the job.
+
+It is *very* hard to configure and debug the scheduler. Do not mess with it without asking first or I will come for you. Fair warning.
+First check the logs (see supervisord.conf).
+If all else fails 
+-edit the attack_job.rb file to create a new object (of any kind) every time the job is run
+-ssh into the rails instance, run 'rails c' and then this script:
+while true
+  # Replace User with whatever object you are creating above
+  puts User.last.id
+  sleep 2
+  system('clear)
+end
+
+It's a hacky way to monitor but it works.
+
+The other thing you can do is:
+-dotcloud ssh thegame.db (the mysql instance)
+-mysql -u root
+-use library_production;
+-select * from delayed_jobs;
+
+The number of entries should increase by one after you initiate a delayed attack. It should go down once the time has elapsed (use a delay of 5s or so).
+
+TODO: Automatically start the service after deployment using a postInstall script
+NOTE: Since the two apps share the same folder, make sure to only start it for the worker instance
+See http://docs.dotcloud.com/guides/environment/
+DotCloud weirdness: supervisord -n doesn't respect the -n, you need to run supervisord.real -n.
+
+It should be possible to run them from different folders but I am sick of this particular task (for now).
+
+Everything else: coming soon!
