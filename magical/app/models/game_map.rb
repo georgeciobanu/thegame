@@ -15,4 +15,6 @@ class GameMap < ActiveRecord::Base
   has_many :teams
   
   belongs_to :game
+  
+  serialize :adjacency_list, Hash
 end

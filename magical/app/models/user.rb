@@ -223,6 +223,13 @@ class User < ActiveRecord::Base
     end
   end
   
+  def join_attack(minion_group_id, my_id)
+    @leading_minion_group = MinionGroup.find minion_group_id
+    # Find all the minions in surrounding areas
+    # set their leading mg id to the mg_id we have here
+                
+  end
+  
   def get_info(user_id)
     @user = User.find(user_id)
     @team = Team.find(@user.team_id)

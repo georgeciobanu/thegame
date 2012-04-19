@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     @my_team = Team.find(@user.team_id)
     @game_map = GameMap.find(@my_team.game_map_id)
     @areas = @game_map.areas
-    
+
     # Return the minion count for each area, of the team that owns it
     @area_owner_minion_count = {}
     @my_team_minion_count = {}
@@ -25,7 +25,6 @@ class UsersController < ApplicationController
           sub(']', ')'))
       @area_owner_minion_count[area.id] = @sum
 
-      
       # Return the minion count for my team, for all areas where we have minions
       @my_team_sum = MinionGroup.sum(:count, :conditions => "area_id =" + area.id.to_s() + " AND user_id IN" + @my_team.member_ids.
           to_s().
@@ -56,6 +55,17 @@ class UsersController < ApplicationController
 
     render :json => @result
   end
+  
+  def join_attack
+    @mg = MinionGroup.find params[:leading_minion_group_id]
+    @user = User.find params[:user_id]
+    
+    @result = @user.join_attack @mg.id, params[:user_id]
+    Rails.logger.info("Result:")    
+    Rails.logger.info(@result)
+
+    render :json => @result
+  end
 
   def place_minions
     @user = User.find params[:id]
@@ -64,13 +74,13 @@ class UsersController < ApplicationController
     Rails.logger.info(@result)
     render :json => @result
   end
-  
+
   def move_minions
     @user = User.find params[:id]
     if not params[:count]
       params[:count] = @user.minion_groups.find_by_area_id(params[:from_area_id]).count - 1
     end
-    
+
     @result = @user.move_minions params[:from_area_id], params[:to_area_id], Integer(params[:count]), params[:id]
     Rails.logger.info("Result:")    
     Rails.logger.info(@result)
