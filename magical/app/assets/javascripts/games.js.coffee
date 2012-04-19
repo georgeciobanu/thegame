@@ -10,6 +10,27 @@ jQuery ->
   
   previous_area_id = -1
 
+  # define navigation bar links
+  mapLink = $('<a>').attr('href','javascript:void(0);').attr('id','urlMap').addClass('active').append 'Map'
+  infoLink = $('<a>').attr('href','javascript:void(0);').attr('id','urlInfo').append 'Info'
+
+  # set click behavior of each link
+  mapLink.on 'click', ->
+    setActiveNavbarItem(this)
+    renderMap infoUrl
+  infoLink.on 'click', -> 
+    setActiveNavbarItem(this)
+    renderInfo()
+
+  # add links to navigation bar
+  $("#navbar").append $('<li>').append mapLink
+  $("#navbar").append $('<li>').append infoLink
+
+
+  renderInfo = () ->
+    $("#GameView").empty()
+    $("#GameView").html("<p>This is where I will insert info</p>")
+
   processInfoResponse = (data, textStatus, jqXHR) ->
     console.log(data)
     info = data
@@ -24,15 +45,19 @@ jQuery ->
     add_to_hash(my_minion_groups, mg.area_id, mg) for mg in data.my_minion_groups
     current_user = info.user
 
-    $("#GameMap").empty()
-    $("#GameMap").html("<div id=\"GameMap\" style=\"position: relative;\"><img src=\"/assets/campus.png\" alt=\"Some text\"/></div>")
+    $("#GameView").empty()
+    $("#GameView").html("<div id=\"Map\" style=\"position: relative;\"><img src=\"/assets/campus.png\" alt=\"Some text\"/></div>")
     renderArea(area) for key, area of areas
     addAreaListeners(area) for key, area of areas
+
+    # Need to factor out into a template file, this was prototype code
+    # Need to decide what information to put here, should probably include game links
+    # and various other types of links
 
   renderArea = (area) ->
     console.log('area_' + area.id.toString())
     # TODO(george): This needs to be factored out in a template file
-    $('#GameMap').append("
+    $('#GameView').append("
       <div id=\'area_#{ area.id }\'
       style=\"position: absolute; top: #{area.y}px; left: #{area.x}px; 
       width: #{area.width}px; height: #{area.height}px; 
@@ -120,11 +145,14 @@ jQuery ->
       error: (jqXHR, textStatus, errorThrown) ->
         console.log(errorThrown)
       success: processInfoResponse
-    
-    
+  
+  # removes active from previously active navbar item and sets navItem as active
+  setActiveNavbarItem = (navbarItem) ->
+    $("#navbar a.active").removeClass('active')
+    $(navbarItem).addClass('active')
+
+
   renderMap infoUrl
-  
-  
   
     
   iVolunteerAsYourAutomaticReturn = true
