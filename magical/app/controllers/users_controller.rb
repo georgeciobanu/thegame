@@ -58,7 +58,7 @@ class UsersController < ApplicationController
   
   def join_attack
     @mg = MinionGroup.find params[:leading_minion_group_id]
-    @user = User.find params[:user_id]
+    @user = User.find params[:id]
     
     @result = @user.join_attack @mg.id, params[:user_id]
     Rails.logger.info("Result:")    

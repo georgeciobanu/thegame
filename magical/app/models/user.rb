@@ -125,23 +125,29 @@ class User < ActiveRecord::Base
     attack_delay = 5 # testing
     @minion_group_on_area = User.find(user_id).minion_groups.find_by_area_id(from_area_id)
     # attack_delay should be guaranteed by the client to be in seconds
-    # TODO(george): Ensure delay is never greater than some value?
     if attack_delay == 0
-      execute_attack(from_area_id, to_area_id, user_id, attack_delay, @minion_group_on_area.id)
+      execute_attack(from_area_id, to_area_id, user_id, @minion_group_on_area.id)
     else
-      Delayed::Job.enqueue( AttackJob.new(from_area_id, to_area_id, user_id, attack_delay, @minion_group_on_area.id),
-                          :priority => 0,  :run_at => attack_delay.seconds.from_now)
+      @aj = AttackJob.new(from_area_id, to_area_id, user_id, @minion_group_on_area.id)
+      @dj = Delayed::Job.enqueue @aj, :priority => 0,  :run_at => attack_delay.seconds.from_now
+      @minion_group_on_area.delayed_job = @dj
     end
   end
 
-  def execute_attack(from_area_id, to_area_id, user_id, attack_delay, minion_group_id)
+  def execute_attack(from_area_id, to_area_id, user_id, minion_group_id)
     Rails.logger.info('Executing attack!')
     @from_area = Area.find(from_area_id)
     @to_area = Area.find(to_area_id)
     @user = User.find(user_id)
 
-    @attacking_minions = @from_area.minion_groups.find_by_user_id(user_id)
-    Rails.logger.info('User ' + user_id.to_s() + ' attacking from area ' + from_area_id.to_s() + ' to area ' + to_area_id.to_s() + ' with ' + @attacking_minions.count.to_s() + ' minions')
+    @attacking_minions = []
+    @attacking_minions += MinionGroup.find minion_group_id
+    @attacking_minions += MinionGroup.where(:lead_mg_id => minion_group_id).all
+    
+    @attacking_minions_count = 0
+    @attacking_minions.each { |minion_group| @attacking_minions_count += minion_group.count }
+
+    Rails.logger.info('User ' + user_id.to_s() + ' attacking from area ' + from_area_id.to_s() + ' to area ' + to_area_id.to_s() + ' with ' + @attacking_minions_count.to_s() + ' minions')
     # Find the minion groups of the team that owns the area, in the attacked area
     @defending_minions = @to_area.owner.minion_groups.where(:area_id => @to_area.id).all
     
@@ -152,7 +158,7 @@ class User < ActiveRecord::Base
     Rails.logger.info(@defending_minions.to_s())
     
     # Model the attack probability as an x-shifted sigmoid function http://tinyurl.com/sigmoid-fun
-    @ratio = @attacking_minions.count / @defending_minions_count
+    @ratio = @attacking_minions_count / @defending_minions_count
     
     @winning_probability = 1 / (1 + Math.exp(-4 * (@ratio - 1.02)))
     @win = Random.rand(1.0) < @winning_probability ? 1 : 0
@@ -171,13 +177,15 @@ class User < ActiveRecord::Base
     end
 
     # TODO(george): We should ensure that some attacking minions always survive - some to stay behind, and some to take over the new area
-    @attacking_minions.update_attribute('count', (@attacking_minions.count * 0.8).floor)
+    @attacking_minions.each { |mg| mg.update_attribute 'count', (mg.count * 0.8).floor }
     Rails.logger.info('Player ' + user_id.to_s() + ' minion groups after attack:')
-    Rails.logger.info(@attacking_minions.count.to_s())
-    if @attacking_minions.count == 0
-      @attacking_minions.destroy
+    # Rails.logger.info(@attacking_minions.count.to_s())
+    @attacking_minions.each do |mg|
+      if mg.count == 0
+        mg.destroy
+      end
     end
-    
+
     @win = 1
     if @win == 1 
       @to_area.update_attribute('owner_id', @user.team_id)
@@ -212,9 +220,9 @@ class User < ActiveRecord::Base
     
     #And then we finally get the team
     @team = Team.find(@team_id)
-    
+
     @user = @team.members.new(email: email, password: password)
-  
+
     if @user.save
       Rails.logger.info '\nUser created, will return\n'
       return :result => 'new', :user => @user
@@ -222,19 +230,32 @@ class User < ActiveRecord::Base
       return :result => 'error', :details => @user.errors.full_messages
     end
   end
-  
+
   def join_attack(minion_group_id, my_id)
     @leading_minion_group = MinionGroup.find minion_group_id
-    # Find all the minions in surrounding areas
+    # Find all the minions in surrounding areas and
     # set their leading mg id to the mg_id we have here
-                
+    @valid_areas = [Area.find(@leading_minion_group.area_id)]
+    @valid_areas += Area.find @leading_minion_group.area.adjacent_areas
+    @available_minion_groups = []
+    Rails.logger.info('Adjacent areas')
+    Rails.logger.info(@adjacent_areas)
+    Rails.logger.info('My id')
+    Rails.logger.info(self.id)
+    @valid_areas.each do |area|
+      @available_minion_groups += area.minion_groups.where(:user_id => self.id).all
+    end
+    # TODO(george): make this code thread safe - it is not right now
+    # since a DelayedJob can take place at the same time
+    Rails.logger.info('Available groups')
+    Rails.logger.info(@available_minion_groups)
+    @available_minion_groups.each { |mg| mg.update_attribute 'lead_minion_group_id', minion_group_id }
   end
-  
+
   def get_info(user_id)
     @user = User.find(user_id)
     @team = Team.find(@user.team_id)
-    
+
   end
-    
-    
+
 end

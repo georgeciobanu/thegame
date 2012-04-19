@@ -6,14 +6,13 @@ Magical::Application.routes.draw do
 
   resources :emails, :except => [:destroy, :update, :edit, :show]
 
-  resources :posts
-
   resources :users, :except => [:destroy, :update, :edit, :show, :new, :index] do
     member do
       get 'info'
       put 'attack_area'
       put 'place_minions'
       put 'move_minions'
+      put 'join_attack'
     end
   end
 

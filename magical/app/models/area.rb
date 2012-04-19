@@ -28,5 +28,9 @@ class Area < ActiveRecord::Base
     
   def index
   end
+  
+  def adjacent_areas
+    return self.game_map.adjacency_list[self.id]
+  end
 
 end
