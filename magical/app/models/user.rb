@@ -138,11 +138,10 @@ class User < ActiveRecord::Base
     Rails.logger.info('Executing attack!')
     @from_area = Area.find(from_area_id)
     @to_area = Area.find(to_area_id)
-    @user = User.find(user_id)
+    @user = User.find(self.id)
 
-    @attacking_minions = []
-    @attacking_minions += MinionGroup.find minion_group_id
-    @attacking_minions += MinionGroup.where(:lead_mg_id => minion_group_id).all
+    @attacking_minions = [MinionGroup.find(minion_group_id)]
+    @attacking_minions += MinionGroup.where(:lead_minion_group_id => minion_group_id).all
     
     @attacking_minions_count = 0
     @attacking_minions.each { |minion_group| @attacking_minions_count += minion_group.count }
@@ -158,6 +157,7 @@ class User < ActiveRecord::Base
     Rails.logger.info(@defending_minions.to_s())
     
     # Model the attack probability as an x-shifted sigmoid function http://tinyurl.com/sigmoid-fun
+    # TODO(george): Sanity checks around this
     @ratio = @attacking_minions_count / @defending_minions_count
     
     @winning_probability = 1 / (1 + Math.exp(-4 * (@ratio - 1.02)))
@@ -177,14 +177,15 @@ class User < ActiveRecord::Base
     end
 
     # TODO(george): We should ensure that some attacking minions always survive - some to stay behind, and some to take over the new area
-    @attacking_minions.each { |mg| mg.update_attribute 'count', (mg.count * 0.8).floor }
-    Rails.logger.info('Player ' + user_id.to_s() + ' minion groups after attack:')
-    # Rails.logger.info(@attacking_minions.count.to_s())
-    @attacking_minions.each do |mg|
+    @attacking_minions.each do |mg| 
       if mg.count == 0
         mg.destroy
-      end
+      else
+        mg.update_attribute 'count', (mg.count * 0.8).floor
+        mg.lead_minion_group = nil
+      end      
     end
+    Rails.logger.info('Player ' + user_id.to_s() + ' minion groups after attack:')
 
     @win = 1
     if @win == 1 
@@ -240,12 +241,10 @@ class User < ActiveRecord::Base
     @available_minion_groups = []
     Rails.logger.info('Adjacent areas')
     Rails.logger.info(@adjacent_areas)
-    Rails.logger.info('My id')
-    Rails.logger.info(self.id)
     @valid_areas.each do |area|
       @available_minion_groups += area.minion_groups.where(:user_id => self.id).all
     end
-    # TODO(george): make this code thread safe - it is not right now
+    # TODO(george): make this code thread safe
     # since a DelayedJob can take place at the same time
     Rails.logger.info('Available groups')
     Rails.logger.info(@available_minion_groups)
