@@ -130,7 +130,8 @@ class User < ActiveRecord::Base
     else
       @aj = AttackJob.new(from_area_id, to_area_id, user_id, @minion_group_on_area.id)
       @dj = Delayed::Job.enqueue @aj, :priority => 0,  :run_at => attack_delay.seconds.from_now
-      @minion_group_on_area.delayed_job = @dj
+      @minion_group_on_area.attack_job_id = @dj.id
+      @minion_group_on_area.save
     end
   end
 
@@ -142,7 +143,7 @@ class User < ActiveRecord::Base
 
     @attacking_minions = [MinionGroup.find(minion_group_id)]
     @attacking_minions += MinionGroup.where(:lead_minion_group_id => minion_group_id).all
-    
+
     @attacking_minions_count = 0
     @attacking_minions.each { |minion_group| @attacking_minions_count += minion_group.count }
 
