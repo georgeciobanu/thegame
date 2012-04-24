@@ -7,7 +7,8 @@ jQuery ->
   teams = {}
   current_user = {}
   area_owner_minion_count = {}
-  
+  attack_jobs_by_from_area = {}
+
   previous_area_id = -1
 
   # define navigation bar links
@@ -32,10 +33,12 @@ jQuery ->
     $("#GameView").html("<p>This is where I will insert info</p>")
 
   processInfoResponse = (data, textStatus, jqXHR) ->
+    console.log "Data:"
     console.log(data)
     info = data
     area_owner_minion_count = data.area_owner_minion_count
-    
+    attack_jobs_by_from_area = data.attack_jobs_by_from_area
+
     # Helper function
     add_to_hash = (hash, key, val) ->
       hash[key] = val
@@ -56,7 +59,7 @@ jQuery ->
 
   renderArea = (area) ->
     console.log('area_' + area.id.toString())
-    # TODO(george): This needs to be factored out in a template file
+    # TODO(george): This needs to be factored out in a template file - backbone?
     $('#GameView').append("
       <div id=\'area_#{ area.id }\'
       style=\"position: absolute; top: #{area.y}px; left: #{area.x}px; 
@@ -75,7 +78,26 @@ jQuery ->
       </p>      
       </div>")
     $("#area_#{ area.id }").data('area_id', area.id)
-  
+    if attack_jobs_by_from_area[area.id]?
+      aj = attack_jobs_by_from_area[area.id]
+      dy = (areas[aj.to_area_id].y - area.y)
+      dx = (areas[aj.to_area_id].x - area.x)
+      if dx != 0
+        slope = dy / dx
+      else
+        slope = 0
+      console.log "Angle" + Math.atan(slope)
+      # Draw an arrow
+      $("#GameView").append("
+      <div id=\"area_#{ area.id}_attack\"
+      style=\"position: absolute; top: #{area.y - 50}px; left: #{area.x - 50}px;
+      width: 290px; height: 110px;
+      background-color:yellow;
+      opacity: 0.3;
+      -webkit-transform: rotate(#{ Math.atan(slope) }rad);\">
+      <img src=\"/assets/black_arrow.png\" />      
+      </div>")
+
   delay = 3 # 3 seconds - to be obtained from user via UI
   performAction = (action, from_area_id, area_id, delay) ->
     if action not in ['move_minions', 'attack_area', 'place_minions']

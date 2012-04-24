@@ -14,6 +14,14 @@ class UsersController < ApplicationController
     @game_map = GameMap.find(@my_team.game_map_id)
     @areas = @game_map.areas
 
+    # Return all the attack jobs
+    @attack_jobs_by_from_area = {}
+    Delayed::Job.all.each do |dj|
+      @aj = YAML::load dj.handler
+      @attack_jobs_by_from_area[@aj.from_area_id] = @aj
+    end
+    
+
     # Return the minion count for each area, of the team that owns it
     @area_owner_minion_count = {}
     @my_team_minion_count = {}
@@ -40,7 +48,7 @@ class UsersController < ApplicationController
     render :json => { :user => @user, :team => @my_team, :game_map => @game_map,
                       :areas => @areas, :my_minion_groups => @user.minion_groups,
                       :my_team_minion_count => @my_team_minion_count, :area_owner_minion_count => @area_owner_minion_count,
-                      :teams => Team.all }
+                      :teams => Team.all, :attack_jobs_by_from_area => @attack_jobs_by_from_area }
   end
 
   def index
