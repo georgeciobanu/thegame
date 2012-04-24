@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120419172427) do
+ActiveRecord::Schema.define(:version => 20120406210558) do
 
   create_table "areas", :force => true do |t|
     t.string   "name"
@@ -78,11 +78,11 @@ ActiveRecord::Schema.define(:version => 20120419172427) do
     t.integer  "user_id"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
-    t.integer  "attack_job_id"
+    t.integer  "delayed_job_id"
     t.integer  "lead_minion_group_id"
   end
 
-  add_index "minion_groups", ["attack_job_id"], :name => "index_minion_groups_on_attack_job_id", :unique => true
+  add_index "minion_groups", ["delayed_job_id"], :name => "index_minion_groups_on_delayed_job_id", :unique => true
   add_index "minion_groups", ["lead_minion_group_id"], :name => "index_minion_groups_on_lead_minion_group_id", :unique => true
 
   create_table "posts", :force => true do |t|
