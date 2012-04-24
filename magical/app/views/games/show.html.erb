@@ -1,21 +1,28 @@
 <h1 style="color:blue;"> You are on Team Blue</h1>
 <p>
-  Click on one of the areas where you have minions to select it, and then on either <br>
-  1. your team's area to move them OR <br>
-  2. another team's area to attack it <br>
+  Click on one of the areas where you have minions to select it, and then on either <br/>
+  1. your team's area to move them OR <br/>
+  2. another team's area to attack it <br/>
   See the JS console for debugging info.
 </p>
 <p> All attacks are hardcoded to succeed. (we are testing this game right now) 
 </p>
-<br>
+<br/>
 Check out <a href='http://www.edwontgo.com'>Ed Won't Go</a> for another fun app we developed.
-
-<br><br>
-
+<br/>
+<br/>
 
 <div id="GameBox">
-	<ul id="navbar"></ul>
+	<ul id="infobar">
+		<li id="minionPool"><a href="javascript:void(0);">0</a></li>
+		<li id="teamName"><a href="javascript:void(0);">Team: .</a></li>
+		<li id="userName"><a href="javascript:void(0);">.</a></li>
+	</ul>
 	
-	<div id="GameView" style="position: relative;"><img src="/assets/campus.png" alt="Some text"/>
-	</div>
+	<div id="GameView"><img src="/assets/campus.png" id="map" alt="Some text"/></div>
+	
+	<ul id="navbar">
+		<li id="urlMap"><a href="javascript:void(0);" class="active">Map</a></li>
+		<li id="urlInfo"><a href="javascript:void(0);">Info</a></li>
+	</ul>
 </div>

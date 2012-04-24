@@ -10,26 +10,17 @@ jQuery ->
   
   previous_area_id = -1
 
-  # define navigation bar links
-  mapLink = $('<a>').attr('href','javascript:void(0);').attr('id','urlMap').addClass('active').append 'Map'
-  infoLink = $('<a>').attr('href','javascript:void(0);').attr('id','urlInfo').append 'Info'
-
-  # set click behavior of each link
-  mapLink.on 'click', ->
+  # set click behavior of navbar links
+  $("#urlMap a").click ->
     setActiveNavbarItem(this)
     renderMap infoUrl
-  infoLink.on 'click', -> 
+  $("#urlInfo a").click -> 
     setActiveNavbarItem(this)
     renderInfo()
 
-  # add links to navigation bar
-  $("#navbar").append $('<li>').append mapLink
-  $("#navbar").append $('<li>').append infoLink
-
-
   renderInfo = () ->
     $("#GameView").empty()
-    $("#GameView").html("<p>This is where I will insert info</p>")
+    $("#GameView").html("<br/><br/><p>This is where I will insert info</p>")
 
   processInfoResponse = (data, textStatus, jqXHR) ->
     console.log(data)
@@ -50,6 +41,14 @@ jQuery ->
     renderArea(area) for key, area of areas
     addAreaListeners(area) for key, area of areas
 
+    $("#minionPool a").html(current_user.minion_pool)
+    $("#teamName a").html('Team: ' + teams[current_user.team_id].color)
+    $("#userName a").html(current_user.name)
+
+    console.dir(current_user)
+
+
+
     # Need to factor out into a template file, this was prototype code
     # Need to decide what information to put here, should probably include game links
     # and various other types of links
@@ -68,9 +67,9 @@ jQuery ->
       onmouseout=\"this.style.backgroundColor=\'#{ teams[area.owner_id].color }\'\" 
       onclick=\"this.style.backgroundColor=\'green\'\">
       <p style=\"font-size:90%;color:black\">
-      <b> #{ area.name}</b> <br>
-      Team #{ teams[area.owner_id].name } <br>
-      #{ area_owner_minion_count[area.id] } minions <br>
+      <b> #{ area.name}</b> <br/>
+      Team #{ teams[area.owner_id].name } <br/>
+      #{ area_owner_minion_count[area.id] } minions <br/>
        #{ if my_minion_groups[area.id]? then 'you:' + my_minion_groups[area.id].count else '' }
       </p>      
       </div>")
@@ -154,5 +153,6 @@ jQuery ->
 
   renderMap infoUrl
   
+
     
   iVolunteerAsYourAutomaticReturn = true

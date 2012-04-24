@@ -2,24 +2,54 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#GameView {
+	position: relative;
+	height: 657px;
+	clear:both;
+}
+
 #GameBox {
-	margin-left: 20px;
+	margin:0 auto;
+	display:block;
+	width:631px;
+	height: 800px;
+	text-align:center;	
 }
 
 #GameBox ul {
-	position:relative;
 	float:left;
-	width:100%;
-	padding:0 0 1.75em 1em;
+	width:inherit;
+	padding:0;
 	margin:0;
-	line-height:1em;
 }
 
 #GameBox ul li {
 	list-style:none;
 	float:left;
-	margin:0;
-	padding:0;
+	line-height:1em;
+}
+
+#infobar li {
+	font-size:180%;
+}
+
+#infobar #minionPool {
+	width:15%;
+}
+
+#infobar #teamName {
+	width:35%;
+	text-transform:capitalize;
+}
+
+#infobar #userName {
+	width:50%;
+}
+
+
+#navbar li {
+	width:50%;
+	font-size:250%;
 }
 
 #GameBox ul a {
@@ -45,4 +75,9 @@
 #GameBox ul a:hover,
 #GameBox ul a.active {
 	background: #bbb;
+}
+
+p {
+	margin: 0;
+	padding: 13px 0;
 }
