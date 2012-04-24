@@ -18,10 +18,17 @@ jQuery ->
   $("#urlInfo a").click -> 
     setActiveNavbarItem(this)
     renderInfo()
+  $("#urlMinions a").click ->
+    setActiveNavbarItem(this)
+    renderMinions()
 
   renderInfo = () ->
     $("#GameView").empty()
     $("#GameView").html("<br/><br/><p>This is where I will insert info</p>")
+
+  renderMinions = () ->
+    $("#GameView").empty()
+    $("#GameView").html("<br/><br/><p>This is where you can get extra minions</p>")
 
   processInfoResponse = (data, textStatus, jqXHR) ->
     console.log "Data:"
