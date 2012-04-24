@@ -20,6 +20,6 @@ class MinionGroup < ActiveRecord::Base
   belongs_to :delayed_job, :class_name => 'Delayed::Backend::ActiveRecord::Job', :foreign_key => :delayed_job_id
   
   belongs_to :lead_minion_group, :class_name => 'MinionGroup'
-  has_many :supporting_minion_groups, :class_name => 'MinionGroup'
+  has_many :supporting_minion_groups, :class_name => 'MinionGroup', :foreign_key => :lead_minion_group_id
   
 end
