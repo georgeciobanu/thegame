@@ -68,14 +68,14 @@ jQuery ->
       background-color: #{ teams[area.owner_id].color };\"
       opacity: 0.8;
       onmouseover=\"this.style.backgroundColor=\'orange\'\" 
-      onmouseout=\"this.style.backgroundColor=\'#{ teams[area.owner_id].color }\'\" 
+      onmouseout=\"this.style.backgroundColor=\'#{ teams[area.owner_id].color }\'\"
       onclick=\"this.style.backgroundColor=\'green\'\">
       <p style=\"font-size:90%;color:black\">
       <b> #{ area.name}</b> <br>
       Team #{ teams[area.owner_id].name } <br>
       #{ area_owner_minion_count[area.id] } minions <br>
        #{ if my_minion_groups[area.id]? then 'you:' + my_minion_groups[area.id].count else '' }
-      </p>      
+      </p>
       </div>")
     $("#area_#{ area.id }").data('area_id', area.id)
     if attack_jobs_by_from_area[area.id]?
@@ -159,7 +159,7 @@ jQuery ->
             
           # TODO: trigger sever-side updates or periodic refreshing
           renderMap infoUrl
-      
+
   renderMap = (url) ->
     $.ajax url,
       type: 'GET' 
