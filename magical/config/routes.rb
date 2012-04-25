@@ -1,10 +1,8 @@
 Magical::Application.routes.draw do
-  
+
   resources :email_updates
 
-  resources :emails
-
-  resources :emails, :except => [:destroy, :update, :edit, :show]
+  resources :emails, :except => [:destroy, :update, :edit, :show, :index]
 
   resources :users, :except => [:destroy, :update, :edit, :show, :new, :index] do
     member do
