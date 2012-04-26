@@ -45,10 +45,14 @@ class UsersController < ApplicationController
       end
     end
 
-    render :json => { :user => @user, :team => @my_team, :game_map => @game_map,
+    respond_to do |format|
+      format.html { render :partial => "info" }
+      format.json { render :json => { :user => @user, :team => @my_team, :game_map => @game_map,
                       :areas => @areas, :my_minion_groups => @user.minion_groups,
                       :my_team_minion_count => @my_team_minion_count, :area_owner_minion_count => @area_owner_minion_count,
-                      :teams => Team.all, :attack_jobs_by_from_area => @attack_jobs_by_from_area }
+                      :teams => Team.all, :attack_jobs_by_from_area => @attack_jobs_by_from_area } 
+                  }
+    end
   end
 
   def index

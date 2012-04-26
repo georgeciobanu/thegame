@@ -23,11 +23,10 @@ jQuery ->
     renderMinions()
 
   renderInfo = () ->
-    $("#GameView").empty()
-    $("#GameView").html("<br/><br/><p>This is where I will insert info</p>")
+    $.get '../users/' + current_user.id + '/info', (data) -> 
+      $("#GameView").html(data)
 
   renderMinions = () ->
-    $("#GameView").empty()
     $("#GameView").html("<br/><br/><p>This is where you can get extra minions</p>")
 
   processInfoResponse = (data, textStatus, jqXHR) ->
