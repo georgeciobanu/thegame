@@ -2,17 +2,28 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#info {
+	margin-left: 200px;
+}
+
+#info h2 {
+	padding-top: 15px;
+	clear:both;
+	text-align:left;
+}
+
 #GameView {
 	position: relative;
 	height: 657px;
 	clear:both;
 }
 
+
 #GameBox {
 	margin:0 auto;
 	display:block;
 	width:631px;
-	height: 800px;
+	height: 900px;
 	text-align:center;	
 }
 
@@ -26,7 +37,7 @@
 #GameBox ul li {
 	list-style:none;
 	float:left;
-	line-height:1em;
+	line-height:1.2em;
 }
 
 #infobar li {
@@ -80,4 +91,11 @@
 p {
 	margin: 0;
 	padding: 13px 0;
+}
+
+
+#GameView ul li {
+	float:none;
+	list-style-type: disc;
+	text-align: left;
 }
