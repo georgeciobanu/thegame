@@ -128,7 +128,7 @@ class User < ActiveRecord::Base
     if attack_delay == 0
       execute_attack(from_area_id, to_area_id, user_id, @minion_group_on_area.id)
     else
-      @aj = AttackJob.new(from_area_id, to_area_id, user_id, @minion_group_on_area.id)
+      @aj = AttackJob.new(Integer(from_area_id), Integer(to_area_id), user_id, @minion_group_on_area.id)
       @dj = Delayed::Job.enqueue @aj, :priority => 0,  :run_at => attack_delay.seconds.from_now
       @minion_group_on_area.delayed_job = @dj
       @minion_group_on_area.save
