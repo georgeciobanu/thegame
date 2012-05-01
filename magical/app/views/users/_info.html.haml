@@ -1,32 +1,22 @@
 %br
 #info
-	%h2 Player Info
-	%ul
-		%li= @user.name
-		%li
-			Minions: 
-			=@user.minion_pool
-		%li= @user.email
-	%h2 Team Info
-	%ul
-		%li
-			Team:
-			%span{ :style => "color:#{@my_team.color};"}= @my_team.name
-		%li 
-			Minions:
-			=@my_team_minion_count[1]
-	%h2 Map Info
-	%ul
-		%li
-			Name:
-			= @game_map.name
-		%li
-			%h3 Area Info
-			%ul{:style => 'padding-left:30px;'}
-				- @areas.each do |area|
-					%li
-						#{area.name}
-						%br
-						Owner:
-						=Team.find(area.owner_id).name
+	%section{ :id => "infosection" }
+		%article{ :class => "half"}
+			%h2 Player Info
+			%span= @user.name
+			%br
+			%span Minions: #{@user.minion_pool}
+		%article{ :class => "half"}
+			%h2 Team Info
+			%span Team:	
+			%span{ :style => "color:#{@my_team.color}; padding-left:0;"}= @my_team.name
+			%br
+			%span Minions #{@my_team_minion_count[1]}
+		%article{ :class => "full"}
+			%h2 Map Info
+			%span Map Name: #{@game_map.name}
+		- @areas.each do |area|
+			%article{ :class => "half"}
+				%h2 Area: #{area.name}
+				%span Owner: #{Team.find(area.owner_id).name}
 

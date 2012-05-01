@@ -2,8 +2,41 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#mapinfo {
+	clear:both;
+	width: 200%;
+}
+
+#infosection article {
+	float:left;
+	background:#EEEEEE;
+	border-radius:15px;
+	-moz-border-radius:15px;
+	-webkit-border-radius:15px;
+	-moz-box-shadow: inset 3px 3px #888;
+	-webkit-box-shadow: inset 3px 3px #888;
+	box-shadow: inset 3px 3px #888;
+	margin:0;
+	padding-top:0;
+	padding-bottom:20px;
+	margin-left:0px;
+	text-align:left;
+}
+
+#infosection article * {
+	padding-left:20%;
+}
+
+#infosection article.half {
+	width: 50%;
+}
+
+#infosection article.full {
+	width: 100%;
+}
+
 #info {
-	margin-left: 200px;
+	margin-left: 0;
 }
 
 #info h2 {
@@ -16,8 +49,8 @@
 	position: relative;
 	height: 657px;
 	clear:both;
+	background-color:#F8F9FA;
 }
-
 
 #GameBox {
 	margin:0 auto;
@@ -25,6 +58,7 @@
 	width:631px;
 	height: 900px;
 	text-align:center;	
+	font-family: helvetica, sans-serif;
 }
 
 #GameBox ul {
@@ -57,9 +91,8 @@
 	width:50%;
 }
 
-
 #navbar li {
-	width:33.33%;
+	width:33.34%;
 	font-size:200%;
 }
 
