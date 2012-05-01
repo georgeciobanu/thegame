@@ -1,3 +1,4 @@
+
 jQuery ->
   infoUrl = '/users/1/info'
   
@@ -54,7 +55,8 @@ jQuery ->
     addAreaListeners(area) for key, area of areas
 
     $("#minionPool a").html(current_user.minion_pool)
-    $("#teamName a").html('Team: ' + teams[current_user.team_id].color)
+    $("#teamSpan").css("color",teams[current_user.team_id].color)
+    $("#teamSpan").html(teams[current_user.team_id].name)
     $("#userName a").html(current_user.name)
 
     console.dir(current_user)

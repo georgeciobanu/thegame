@@ -2,10 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#mapinfo {
-	clear:both;
-	width: 200%;
-}
 
 #infosection article {
 	float:left;
@@ -37,6 +33,7 @@
 
 #info {
 	margin-left: 0;
+	text-transform:capitalize;
 }
 
 #info h2 {
